@@ -1,0 +1,22 @@
+{
+  "name": "db.js",
+  "version": "1.0.0",
+  "description": "ssss",
+  "main": "db.js",
+  "scripts": {
+    "start": "node db.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/exideys/car_rental_service.git"
+  },
+  "keywords": [
+    "sadsad"
+  ],
+  "author": "me",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/exideys/car_rental_service/issues"
+  },
+  "homepage": "https://github.com/exideys/car_rental_service#readme"
+}
