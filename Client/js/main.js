@@ -5,10 +5,10 @@ window.addEventListener('load', () => {
     // Добавим небольшой таймер, чтобы выглядело как движение
     setTimeout(() => {
       car1.classList.add('animate');
-    }, 300);
+    }, 200);
   
     setTimeout(() => {
       car2.classList.add('animate');
-    }, 600);
+    }, 200);
   });
   
