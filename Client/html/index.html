@@ -1,11 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Car Rental</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    
+
+  <header>
+    <nav>
+      <a href="../html/index.html">Главная</a>
+      <a href="#">Каталог</a>
+      <a href="#">Контакты</a>
+      <a href="#">О нас</a>
+    </nav>
+    <a href="../html/login.html" class="auth-btn">Авторизация</a>
+  </header>
+
+  <section class="hero">
+    <h1>Rent the Best Cars</h1>
+    <p>Embark on your journey with top-tier car rentals customized to meet your needs.</p>
+    <a href="../html/booking.html">
+    <button onclick="bookNow()">Book Now</button>
+    </a>
+    <img src="../assets/start_images.png" alt="BMW Car" class="hero-car">
+    <img src="../assets/start_images_2.png" alt="BMW Car" class="hero-car-2">
+  </section>
+
+  <section class="advantages">
+    <h2>Our Advantages</h2>
+    <div class="adv-list">
+      <div class="adv-item">
+        <h3>Wide Range of Vehicles</h3>
+        <p>Choose from a large selection of cars to suit your needs.</p>
+      </div>
+      <div class="adv-item">
+        <h3>Competitive Pricing</h3>
+        <p>Get the best value for your money on all rentals.</p>
+      </div>
+      <div class="adv-item">
+        <h3>24/7 Customer Support</h3>
+        <p>We're here to assist you anytime, day or night.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="vehicles">
+    <h2>Our Vehicles</h2>
+    <!-- No vehicles listed -->
+  </section>
+
+  <script src="script.js"></script>
 </body>
 </html>
