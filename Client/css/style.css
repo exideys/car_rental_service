@@ -97,6 +97,23 @@ body {
     left:100px;
 
   }
+  .hero-car,
+.hero-car-2 {
+  opacity: 0;
+  transform: translateX(-200%);
+  transition: all 1.5s ease;
+}
+
+.hero-car-2 {
+  transform: translateX(200%);
+}
+
+.hero-car.animate,
+.hero-car-2.animate {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 
   
   
