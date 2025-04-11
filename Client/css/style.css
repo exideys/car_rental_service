@@ -26,7 +26,7 @@ body {
     padding: 0.5rem 1rem;
     border-radius: 6px;
   }
-  
+
   .hero {
     display: flex;
     flex-direction: column;
@@ -39,6 +39,7 @@ body {
   .hero h1 {
     font-size: 2.5rem;
     margin: 0.5rem 0;
+    text-align: center;
   }
   
   .hero p {
@@ -81,6 +82,12 @@ body {
   .adv-item h3 {
     margin-top: 0.5rem;
     font-size: 1.1rem;
+    text-align: center;
+  }
+  .adv-item p {
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    text-align: center;
   }
   .hero-car-2{
     position:absolute;
