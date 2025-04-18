@@ -1,37 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-	<title>Slide Navbar</title>
-	<link rel="stylesheet" href="../css/login.css">
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="../css/login.css">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <video autoplay loop muted playsinline id="bg-video">
-    <source src="../assets/login_video.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
-	<div class="main"> 
-		<input type="checkbox" id="chk" aria-hidden="true">
+  <div class="page-container">
+    <header>
+      <nav>
+        <a href="../html/index.html">Главная</a>
+        <a href="#">Каталог</a>
+        <a href="#">Контакты</a>
+        <a href="#">О нас</a>
+      </nav>
+      <a href="../html/login.html" class="auth-btn">Авторизация</a>
+    </header>
 
-			<div class="signup">
-				<form>
-					<label for="chk" aria-hidden="true">Sign up</label>
-					<input type="text" name="txt" placeholder="User name" required="">
-					<input type="email" name="email" placeholder="Email" required="">
-          <input type="number" name="broj" placeholder="BrojTelefona" required="">
-					<input type="password" name="pswd" placeholder="Password" required="">
-					<button>Sign up</button>
-				</form>
-			</div>
+    <video autoplay loop muted playsinline id="bg-video">
+      <source src="../assets/login_video.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
 
-			<div class="login">
-				<form>
-					<label for="chk" aria-hidden="true">Login</label>
-					<input type="email" name="email" placeholder="Email" required="">
-					<input type="password" name="pswd" placeholder="Password" required="">
-					<button>Login</button>
-				</form>
-			</div>
-	</div>
+    <main class="content">
+      <div class="main">
+        <input type="checkbox" id="chk" aria-hidden="true">
+
+        <div class="signup">
+          <form>
+            <label for="chk" aria-hidden="true">Sign up</label>
+            <input type="text" name="txt" placeholder="User name" required="">
+            <input type="email" name="email" placeholder="Email" required="">
+            <input type="number" name="broj" placeholder="Telephone" required="">
+            <input type="password" name="pswd" placeholder="Password" required="">
+            <button>Sign up</button>
+          </form>
+        </div>
+
+        <div class="login">
+          <form>
+            <label for="chk" aria-hidden="true">Login</label>
+            <input type="email" name="email" placeholder="Email" required="">
+            <input type="password" name="pswd" placeholder="Password" required="">
+            <button>Login</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <p>&copy; 2025 RentAuto. All rights reserved.</p>
+        <nav>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Contact</a>
+        </nav>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>
