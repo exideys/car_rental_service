@@ -106,6 +106,7 @@ body {
     height: 350px;
     top:113px;
     right:90px;
+    user-select: none;
   }
   .hero-car{
     position:absolute;
@@ -113,6 +114,7 @@ body {
     height: 400px;
     top:93px;
     left:100px;
+    user-select: none;
 
   }
   .hero-car,
