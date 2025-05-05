@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Catalog - RentAuto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/catalog.css">
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="../html/index.html">Home</a>
+      <a href="../html/catalog.html">Catalog</a>
+      <a href="../html/contacts.html">Contacts</a>
+      <a href="../html/about.html">About Us</a>
+    </nav>
+    <a href="../html/login.html" class="auth-btn">Login/Sign up</a>
+  </header>
+
+  <main class="catalog-container">
+    <aside class="filter-panel">
+      <h2>Filter</h2>
+
+      <label for="car-brand">Car Brand:</label>
+      <select id="car-brand" name="car-brand">
+        <option value="">Any</option>
+        <option value="bmw">BMW</option>
+        <option value="audi">Audi</option>
+        <option value="toyota">Toyota</option>
+      </select>
+
+      <label for="fuel-type">Fuel Type:</label>
+      <select id="fuel-type" name="fuel-type">
+        <option value="">Any</option>
+        <option value="gasoline">Gasoline</option>
+        <option value="diesel">Diesel</option>
+        <option value="electric">Electric</option>
+      </select>
+
+      <fieldset>
+        <legend>Transmission</legend>
+        <label><input type="checkbox" name="transmission" value="auto"> Automatic</label><br>
+        <label><input type="checkbox" name="transmission" value="manual"> Manual</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Features</legend>
+        <label><input type="checkbox" name="feature" value="ac"> Air Conditioning</label><br>
+        <label><input type="checkbox" name="feature" value="gps"> GPS</label><br>
+        <label><input type="checkbox" name="feature" value="heated-seats"> Heated Seats</label>
+      </fieldset>
+    </aside>
+
+    <section class="car-list">
+      <!-- Here will be car listings -->
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 RentAuto. All rights reserved.</p>
+      <nav>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Car Rental</title>
+  <title>RentAuto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -10,19 +10,19 @@
 
   <header>
     <nav>
-      <a href="../html/index.html">Главная</a>
-      <a href="#">Каталог</a>
-      <a href="#">Контакты</a>
-      <a href="#">О нас</a>
+      <a href="../html/index.html">Home</a>
+      <a href="../html/catalog.html">Catalog</a>
+      <a href="../html/contacts.html">Contacts</a>
+      <a href="../html/about.html">About Us</a>
     </nav>
-    <a href="../html/login.html" class="auth-btn">Авторизация</a>
+    <a href="../html/login.html" class="auth-btn">Login/Sign up</a>
   </header>
 
   <section class="hero">
-    <h1>Rent the Best Cars</h1>
-    <p>Embark on your journey with top-tier car rentals customized to meet your needs.</p>
-    <a href="../html/booking.html">
-    <button onclick="bookNow()">Book Now</button>
+    <h1>Welcome to RentAuto</h1>
+    <p>Start your journey with reliable and affordable car rentals tailored to your lifestyle.</p>
+    <a href="../html/catalog.html">
+      <button onclick="bookNow()">Book Now</button>
     </a>
     <img src="../assets/start_images.png" alt="BMW Car" class="hero-car">
     <img src="../assets/start_images_2.png" alt="Mercedes Car" class="hero-car-2">
@@ -32,24 +32,35 @@
     <h2>Our Advantages</h2>
     <div class="adv-list">
       <div class="adv-item">
-        <h3>Wide Range of Vehicles</h3>
-        <p>Choose from a large selection of cars to suit your needs.</p>
+        <h3>Wide Vehicle Selection</h3>
+        <p>Choose from a large variety of cars for any occasion.</p>
       </div>
       <div class="adv-item">
-        <h3>Competitive Pricing</h3>
-        <p>Get the best value for your money on all rentals.</p>
+        <h3>Great Prices</h3>
+        <p>Enjoy competitive rates with no hidden fees.</p>
       </div>
       <div class="adv-item">
-        <h3>24/7 Customer Support</h3>
-        <p>We're here to assist you anytime, day or night.</p>
+        <h3>24/7 Support</h3>
+        <p>Our team is available around the clock to help you anytime.</p>
       </div>
     </div>
   </section>
 
   <section class="vehicles">
-    <h2>Our Vehicles</h2>
-    <!-- No vehicles listed -->
+    <h2>Our Fleet</h2>
+    <!-- Vehicle list will be added soon -->
   </section>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 RentAuto. All rights reserved.</p>
+      <nav>
+        <a href="../html/privacy.html">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="../html/contacts.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
 
   <script src="../js/main.js"></script>
 </body>

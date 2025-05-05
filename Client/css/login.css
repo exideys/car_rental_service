@@ -1,123 +1,199 @@
-#bg-video {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-    object-fit: cover;
-    z-index: -1;
-  }
-  .form {
-    position:absolute;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-left: 2em;
-    padding-right: 2em;
-    padding-bottom: 0.4em;
-    background-color: #171717;
-    border-radius: 25px;
-    transition: .4s ease-in-out;
-    width:500px;
-    height:400px;
-    top:50%;
-    left:50%;
+/* ОБЩИЕ НАСТРОЙКИ */
+* {
+	box-sizing: border-box;
   }
   
-  .form:hover {
-    transform: scale(1.05);
-    border: 1px solid black;
+  html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: 'Jost', sans-serif;
   }
   
-  #heading {
-    text-align: center;
-    margin: 2em;
-    color: rgb(255, 255, 255);
-    font-size: 1.2em;
+  .page-container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	position: relative;
+	z-index: 1;
   }
   
-  .field {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5em;
-    border-radius: 25px;
-    padding: 0.6em;
-    border: none;
-    outline: none;
-    color: white;
-    background-color: #171717;
-    box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+  .content {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 80px; /* отступ под фиксированный header */
+	position: relative;
+	z-index: 2;
   }
   
-  .input-icon {
-    height: 1.3em;
-    width: 1.3em;
-    fill: white;
+  header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem 2rem;
+	background: #fff;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 10;
   }
   
-  .input-field {
-    background: none;
-    border: none;
-    outline: none;
-    width: 100%;
-    color: #d3d3d3;
+  nav a {
+	margin: 0 1rem;
+	text-decoration: none;
+	color: #111;
+	font-weight: 600;
   }
   
-  .form .btn {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    margin-top: 2.5em;
+  .auth-btn {
+	background-color: #111;
+	color: #fff;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 10px;
+	font-size: 16px;
+	font-weight: 600;
+	text-decoration: none;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
-  .button1 {
-    padding: 0.5em;
-    padding-left: 1.1em;
-    padding-right: 1.1em;
-    border-radius: 5px;
-    margin-right: 0.5em;
-    border: none;
-    outline: none;
-    transition: .4s ease-in-out;
-    background-color: #252525;
-    color: white;
+  .auth-btn:hover {
+	background-color: #333;
+	transform: translateY(-2px);
   }
   
-  .button1:hover {
-    background-color: black;
-    color: white;
+  #bg-video {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
+	object-fit: cover;
+	z-index: -1;
   }
   
-  .button2 {
-    padding: 0.5em;
-    padding-left: 2.3em;
-    padding-right: 2.3em;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    transition: .4s ease-in-out;
-    background-color: #252525;
-    color: white;
+  .main {
+	width: 450px;
+	height: 600px;
+	background: black;
+	overflow: hidden;
+	border-radius: 10px;
+	box-shadow: 5px 20px 50px #000;
+	z-index: 2;
   }
   
-  .button2:hover {
-    background-color: black;
-    color: white;
+  #chk {
+	display: none;
   }
   
-  .button3 {
-    margin-bottom: 3em;
-    padding: 0.5em;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    transition: .4s ease-in-out;
-    background-color: #252525;
-    color: white;
+  .signup {
+	position: relative;
+	width: 100%;
+	height: 100%;
   }
   
-  .button3:hover {
-    background-color: red;
-    color: white;
+  label {
+	color: #fff;
+	font-size: 2.3em;
+	justify-content: center;
+	display: flex;
+	margin: 50px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: .5s ease-in-out;
   }
+  
+  input {
+	width: 60%;
+	height: 10px;
+	background: #e0dede;
+	justify-content: center;
+	display: flex;
+	margin: 20px auto;
+	padding: 12px;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+  }
+  
+  button {
+	width: 60%;
+	height: 40px;
+	margin: 10px auto;
+	justify-content: center;
+	display: block;
+	color: #fff;
+	background: rgb(21, 189, 245);
+	font-size: 1em;
+	font-weight: bold;
+	margin-top: 30px;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	transition: .2s ease-in;
+	cursor: pointer;
+  }
+  
+  button:hover {
+	background: #6d44b8;
+  }
+  
+  .login {
+	height: 560px;
+	background: #eee;
+	border-radius: 60% / 10%;
+	transform: translateY(-180px);
+	transition: .8s ease-in-out;
+  }
+  
+  .login label {
+	color: black;
+	transform: scale(.6);
+  }
+  
+  #chk:checked ~ .login {
+	transform: translateY(-600px);
+  }
+  
+  #chk:checked ~ .login label {
+	transform: scale(1);
+  }
+  
+  #chk:checked ~ .signup label {
+	transform: scale(.6);
+  }
+  
+  /* FOOTER */
+  .footer {
+	background-color: #f8f8f8;
+	padding: 20px 0;
+	text-align: center;
+	font-size: 14px;
+	color: #555;
+	border-top: 1px solid #ddd;
+  }
+  
+  .footer-content {
+	max-width: 1200px;
+	margin: 0 auto;
+  }
+  
+  .footer nav {
+	margin-top: 10px;
+  }
+  
+  .footer nav a {
+	margin: 0 10px;
+	color: #555;
+	text-decoration: none;
+	transition: color 0.2s ease;
+  }
+  
+  .footer nav a:hover {
+	color: #000;
+  }
+  
