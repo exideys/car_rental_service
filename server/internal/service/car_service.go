@@ -7,6 +7,7 @@ import (
 
 type CarService interface {
 	ListAvailableCars() ([]models.Car, error)
+	GetFilteredCars(filters models.CarFilters) ([]models.Car, error)
 }
 
 type carService struct {
@@ -19,4 +20,8 @@ func NewCarService(repo repository.CarRepository) CarService {
 
 func (s *carService) ListAvailableCars() ([]models.Car, error) {
 	return s.repo.GetAvailableCars()
+}
+
+func (s *carService) GetFilteredCars(filters models.CarFilters) ([]models.Car, error) {
+	return s.repo.FindWithFilters(filters)
 }
