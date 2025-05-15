@@ -21,7 +21,7 @@
   </header>
 
   <main class="catalog-container">
-
+    <form  id = "filter-form">
     <aside class="filter-panel">
       <h2>Filter</h2>
       <fieldset>
@@ -45,8 +45,8 @@
         <option value="toyota">Toyota</option>
       </select>
 
-      <label for="fuel-type">Year of issues</label>
-      <select id="fuel-type" name="fuel-type">
+      <label for="Year_of_issues">Year of issues</label>
+      <select id="Year_of_issues" name="Year_of_issues">
         <option value="">Any</option>
         <option value="2025">2025</option>
         <option value="2024">2024</option>
@@ -80,19 +80,20 @@
         <legend>Car class</legend>
         <div class="filter-row">
           <span>Premium</span>
-          <input type="checkbox" name="Premium" value="Premium">
+          <input type="checkbox" name="car-class" value="Premium">
         </div>
         <div class="filter-row">
           <span>Comfort</span>
-          <input type="checkbox" name="Comfort" value="Comfort">
+          <input type="checkbox" name="car-class" value="Comfort">
         </div>
         <div class="filter-row">
           <span>Econom</span>
-          <input type="checkbox" name="Econom" value="Econom">
+          <input type="checkbox" name="car-class" value="Econom">
         </div>
       </fieldset>
+      <button type="submit">Submit</button>
     </aside>
-
+    </form>
     <section class="car-list">
       <!-- Here will be car listings -->
     </section>
