@@ -17,7 +17,7 @@ func NewCarHandler(svc service.CarService) *CarHandler {
 }
 
 func (h *CarHandler) GetAvailableCars(c *gin.Context) {
-	var f models.Car_filter
+	var f models.CarFilter
 	if err := c.BindQuery(&f); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid filter params"})
 		return
