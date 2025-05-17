@@ -1,8 +1,9 @@
 package configs
 
 import (
-	"github.com/exideys/car_rental_service/internal/models"
 	"log"
+
+	"github.com/exideys/car_rental_service/internal/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

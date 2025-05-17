@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/exideys/car_rental_service#readme",
   "dependencies": {
-    "mysql2": "^3.14.0"
+    "mysql2": "^3.14.1"
   }
 }
