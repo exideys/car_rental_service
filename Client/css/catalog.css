@@ -171,8 +171,8 @@ nav a:hover {
   padding: 5px;
   text-align: center;
 
-  /* скрытие стрелок в input[type=number] */
-  -moz-appearance: textfield;
+
+
 }
 
 .price-range input::-webkit-outer-spin-button,
