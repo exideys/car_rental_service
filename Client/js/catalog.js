@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <p>Рік випуску: ${car.year_of_issue}</p>
               <p>Номер: ${car.plate_number}</p>
               <p>Статус: ${car.status}</p>
-              <p>Ціна: ${car.daily_price}</p>
+              <p>Ціна:${car.daily_price}<p>
             `;
                 list.append(card);
             });

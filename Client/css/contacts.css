@@ -6,19 +6,26 @@ body {
   }
   
   header {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-    background: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  }
-  
-  nav a {
-    margin: 0 1rem;
-    text-decoration: none;
-    color: #111;
-    font-weight: 600;
-  }
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+nav a {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: #111;
+  font-weight: 600;
+  display: inline-block;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+nav a:hover {
+  color: #000;
+  transform: translateY(-3px);
+}
   
   .auth-btn {
     background-color: #111;
