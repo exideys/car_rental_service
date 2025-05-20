@@ -14,7 +14,10 @@ func main() {
 	carSvc := service.NewCarService(carRepo)
 	carHandler := handler.NewCarHandler(carSvc)
 	r := gin.Default()
-	r.SetTrustedProxies(nil)
+	err := r.SetTrustedProxies(nil)
+	if err != nil {
+		return
+	}
 	r.Static("/css", "../Client/css")
 	r.Static("/js", "../Client/js")
 	r.StaticFile("/catalog", "../Client/html/catalog.html")
@@ -22,5 +25,8 @@ func main() {
 	{
 		api.GET("/cars", carHandler.GetAvailableCars)
 	}
-	r.Run(":8080")
+	err = r.Run(":8080")
+	if err != nil {
+		return
+	}
 }

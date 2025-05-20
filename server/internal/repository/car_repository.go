@@ -6,7 +6,7 @@ import (
 )
 
 type CarRepository interface {
-	GetAvailableCars(f models.Car_filter) ([]models.Car, error)
+	GetAvailableCars(f models.CarFilter) ([]models.Car, error)
 }
 
 type carRepository struct {
@@ -17,24 +17,24 @@ func NewCarRepository(db *gorm.DB) CarRepository {
 	return &carRepository{db: db}
 }
 
-func (r *carRepository) GetAvailableCars(f models.Car_filter) ([]models.Car, error) {
+func (r *carRepository) GetAvailableCars(f models.CarFilter) ([]models.Car, error) {
 	var cars []models.Car
 
 	db := r.db.Where("status = ?", models.StatusAvailable)
-	if f.Min_price > 0 {
-		db = db.Where("daily_price >= ?", f.Min_price)
+	if f.MinPrice > 0 {
+		db = db.Where("daily_price >= ?", f.MinPrice)
 	}
-	if f.Max_price > 0 {
-		db = db.Where("daily_price <= ?", f.Max_price)
+	if f.MaxPrice > 0 {
+		db = db.Where("daily_price <= ?", f.MaxPrice)
 	}
-	if f.Car_brand != "" {
-		db = db.Where("brand = ?", f.Car_brand)
+	if f.CarBrand != "" {
+		db = db.Where("brand = ?", f.CarBrand)
 	}
-	if f.Year_of_issues > 0 {
-		db = db.Where("year_of_issue = ?", f.Year_of_issues)
+	if f.YearOfIssues > 0 {
+		db = db.Where("year_of_issue = ?", f.YearOfIssues)
 	}
-	if len(f.Car_class) > 0 {
-		db = db.Where("car_class IN ?", f.Car_class)
+	if len(f.CarClass) > 0 {
+		db = db.Where("car_class IN ?", f.CarClass)
 	}
 	if err := db.Find(&cars).Error; err != nil {
 		return nil, err

@@ -28,6 +28,7 @@ type Car struct {
 	PlateNumber  string `json:"plate_number"`
 	YearOfIssue  uint   `json:"year_of_issue"`
 	CarClass     string `json:"car_class"`
+	Daily_price  uint   `json:"daily_price"`
 	InsuranceNum string `gorm:"type:varchar(100)" json:"insurance_num"`
 	Status       Status `gorm:"type:varchar(20);default:'Вільний'" json:"status"`
 }

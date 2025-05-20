@@ -28,6 +28,7 @@ function renderCars(cars) {
               <p>Рік випуску: ${car.year_of_issue}</p>
               <p>Номер: ${car.plate_number}</p>
               <p>Статус: ${car.status}</p>
+              <p>Ціна: ${car.daily_price}</p>
     `;
         container.appendChild(carElement);
     });
