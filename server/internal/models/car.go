@@ -3,9 +3,9 @@ package models
 type Status string
 
 const (
-	StatusAvailable   Status = "Вільний"
-	StatusRented      Status = "Недоступний"
-	StatusMaintenance Status = "На ремонті"
+	StatusAvailable   Status = "Available"
+	StatusRented      Status = "Not available"
+	StatusMaintenance Status = "Under repair"
 )
 
 func (s Status) IsValid() bool {
@@ -28,9 +28,9 @@ type Car struct {
 	PlateNumber  string `json:"plate_number"`
 	YearOfIssue  uint   `json:"year_of_issue"`
 	CarClass     string `json:"car_class"`
-	Daily_price  uint   `json:"daily_price"`
 	InsuranceNum string `gorm:"type:varchar(100)" json:"insurance_num"`
 	Status       Status `gorm:"type:varchar(20);default:'Вільний'" json:"status"`
+	Daily_price  uint   `json:"daily_price"`
 }
 
 func (Car) TableName() string {
