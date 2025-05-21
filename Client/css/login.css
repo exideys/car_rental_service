@@ -1,4 +1,4 @@
-/* ОБЩИЕ НАСТРОЙКИ */
+
 * {
 	box-sizing: border-box;
   }
@@ -7,7 +7,7 @@
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	
+	font-family: 'Jost', sans-serif;
 	background-color: #fff;
   }
   
@@ -24,7 +24,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-top: 80px; /* отступ под фиксированный header */
+	margin-top: 80px; 
 	position: relative;
 	z-index: 2;
   }
@@ -162,7 +162,7 @@ nav a:hover {
 	transform: scale(.6);
   }
   
-  /* FOOTER */
+
   .footer {
 	background-color: #f8f8f8;
 	padding: 20px 0;
