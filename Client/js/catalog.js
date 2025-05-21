@@ -6,8 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
             cars.forEach(car => {
                 const card = document.createElement('div');
                 card.className = 'car-card';
+                image_path = car.image_path;
                 card.innerHTML = `
               <h3>${car.brand} ${car.model}</h3>
+              <img src="${image_path}" alt="car image" />
               <p>Рік випуску: ${car.year_of_issue}</p>
               <p>Номер: ${car.plate_number}</p>
               <p>Статус: ${car.status}</p>
@@ -25,6 +27,7 @@ function renderCars(cars) {
         carElement.className = 'car-item';
         carElement.innerHTML = `
       <h3>${car.brand} ${car.model}</h3>
+       <img src="${car.image_path}" alt="car image" />
               <p>Рік випуску: ${car.year_of_issue}</p>
               <p>Номер: ${car.plate_number}</p>
               <p>Статус: ${car.status}</p>

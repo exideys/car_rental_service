@@ -31,6 +31,7 @@ type Car struct {
 	InsuranceNum string `gorm:"type:varchar(100)" json:"insurance_num"`
 	Status       Status `gorm:"type:varchar(20);default:'Вільний'" json:"status"`
 	Daily_price  uint   `json:"daily_price"`
+	ImagePath    string `json:"image_path"`
 }
 
 func (Car) TableName() string {
