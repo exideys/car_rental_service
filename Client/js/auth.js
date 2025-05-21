@@ -44,7 +44,7 @@ function showUserMenu(user) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Sign-up
+    
     document.querySelector('.signup form')
         .addEventListener('submit', async e => {
             e.preventDefault();
