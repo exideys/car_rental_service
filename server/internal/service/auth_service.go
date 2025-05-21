@@ -4,12 +4,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/exideys/car_rental_service/internal/repository"
-	"golang.org/x/crypto/bcrypt"
-	"gorm.io/gorm"
 	"regexp"
 	"strings"
 	"time"
+
+	"github.com/exideys/car_rental_service/internal/repository"
+	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 type AuthService interface {
