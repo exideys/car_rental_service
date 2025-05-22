@@ -6,31 +6,27 @@
     <title>Profile</title>
 </head>
 <body>
-    <li>Выводить все в таблицы Client(кроме Client id)</li>
-    <li>Выводить с таюлицы Сlient_Evolution "rating and comments"</li>
-    <h2>Профиль пользователя</h2>
-    <p>Имя:   <span id="profile-name"></span></p>
-    <p>Email: <span id="profile-email"></span></p>
+<h2>Профіль користувача</h2>
+<p>Ім’я:   <span id="profile-name"></span></p>
+<p>Email: <span id="profile-email"></span></p>
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-
-        const cached = sessionStorage.getItem('user');
-        if (cached) {
-            renderProfile(JSON.parse(cached));
-            return;
-        }
-
-        fetch('/api/auth/check_session.go')
-            .then(r => r.json())
-            .then(u => u.loggedIn ? renderProfile(u) : location.replace('/html/login.html'))
-            .catch(console.error);
+        fetch('/api/current_user')
+            .then(res => {
+                if (!res.ok) throw new Error("Unauthorized");
+                return res.json();
+            })
+            .then(renderProfile)
+            .catch(() => {
+                window.location.href = "/html/login.html";
+            });
     });
 
     function renderProfile(user) {
-        document.querySelector('#profile-name').textContent = user.username ?? (user.first_name + ' ' + user.last_name);
+        document.querySelector('#profile-name').textContent =
+            user.username ?? `${user.first_name} ${user.last_name}`;
         document.querySelector('#profile-email').textContent = user.email;
-        sessionStorage.setItem('user', JSON.stringify(user));
     }
 </script>
 </html>

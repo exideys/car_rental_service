@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/exideys/car_rental_service/internal/models"
 	"regexp"
 	"strings"
 	"time"
@@ -15,6 +16,8 @@ import (
 
 type AuthService interface {
 	SignUp(ctx context.Context, firstName, lastName, email, telephone, password, passwordConfirm, birthDate string) error
+	Login(ctx context.Context, email, password string) (*models.Client, error)
+	GetByEmail(email string) (*models.Client, error)
 }
 
 type authService struct {
@@ -85,7 +88,7 @@ func (s *authService) SignUp(ctx context.Context, first_name, last_name, email, 
 		return errors.New("birth date must be in YYYY-MM-DD format")
 	}
 	if _, err := s.repo.FindByEmail(ctx, email); err == nil {
-		return errors.New("email уже зарегистрирован")
+		return errors.New("email already registered")
 	} else if !errors.Is(err, gorm.ErrRecordNotFound) {
 		return err
 	}
@@ -97,4 +100,39 @@ func (s *authService) SignUp(ctx context.Context, first_name, last_name, email, 
 
 	return s.repo.SignUp(ctx, first_name, last_name, email, telephone, string(hashed), bd.Format("2006-01-02"))
 
+}
+
+func (s *authService) Login(ctx context.Context, email, password string) (*models.Client, error) {
+	email = strings.TrimSpace(email)
+	password = strings.TrimSpace(password)
+
+	if email == "" || password == "" {
+		return nil, errors.New("email and password are required")
+	}
+
+	client, err := s.repo.FindByEmail(ctx, email)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errors.New("incorrect email or password")
+		}
+		return nil, err
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(client.Password.Hash), []byte(password)); err != nil {
+		return nil, errors.New("incorrect email or password")
+	}
+
+	if client.IsBlocked {
+		return nil, errors.New("account is blocked")
+	}
+
+	return client, nil
+}
+
+func (s *authService) GetByEmail(email string) (*models.Client, error) {
+	email = strings.TrimSpace(email)
+	if email == "" {
+		return nil, errors.New("email is required")
+	}
+	return s.repo.FindByEmail(context.Background(), email)
 }
