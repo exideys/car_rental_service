@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cars.forEach(car => {
                 const card = document.createElement('div');
                 card.className = 'car-card';
+                image_path = car.image_path;
                 card.innerHTML = `
             <h3>${car.brand} ${car.model}</h3>
             <div class="car-card-content">

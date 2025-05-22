@@ -34,6 +34,7 @@ func main() {
 	}
 	r.Static("/css", "../Client/css")
 	r.Static("/js", "../Client/js")
+	r.Static("/assets", "../Client/assets")
 	r.StaticFile("/catalog", "../Client/html/catalog.html")
 	r.StaticFile("", "../Client/html/index.html")
 	r.StaticFile("/contacts", "../Client/html/contacts.html")
