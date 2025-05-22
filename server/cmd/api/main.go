@@ -1,7 +1,16 @@
 package main
 
 import (
+	_ "github.com/GoAdminGroup/go-admin/adapter/gin"
+	"github.com/GoAdminGroup/go-admin/engine"
+	"github.com/GoAdminGroup/go-admin/modules/config"
+	_ "github.com/GoAdminGroup/go-admin/modules/db/drivers/mysql"
+	"github.com/GoAdminGroup/go-admin/plugins/admin"
+	_ "github.com/GoAdminGroup/go-admin/template/chartjs"
+	_ "github.com/GoAdminGroup/themes/adminlte"
 	"github.com/exideys/car_rental_service/configs"
+	"github.com/exideys/car_rental_service/internal/admin/tables"
+	_ "github.com/exideys/car_rental_service/internal/admin/tables"
 	"github.com/exideys/car_rental_service/internal/handler"
 	"github.com/exideys/car_rental_service/internal/repository"
 	"github.com/exideys/car_rental_service/internal/service"
@@ -11,6 +20,7 @@ import (
 )
 
 func main() {
+
 	//Connection to a database
 	db := configs.InitDB()
 	//Repositories
@@ -25,6 +35,8 @@ func main() {
 	//Router
 	r := gin.Default()
 	err := r.SetTrustedProxies(nil)
+
+	eng := engine.Default()
 	// --- sessions ---
 	store := cookie.NewStore([]byte("super-secret-key"))
 	r.Use(sessions.Sessions("car_rental_session", store))
@@ -46,6 +58,35 @@ func main() {
 	{
 		api.GET("/cars", carHandler.GetAvailableCars)
 	}
+	cfg := &config.Config{
+		Databases: config.DatabaseList{
+			"default": {
+				Host:   "localhost",
+				Port:   "3306",
+				User:   "root",
+				Pwd:    "",
+				Name:   "rent_cars",
+				Driver: "mysql",
+			},
+		},
+		UrlPrefix: "admin",
+		Theme:     "adminlte",
+		IndexUrl:  "/info/cars",
+		Store: config.Store{
+			Path:   "./uploads",
+			Prefix: "uploads",
+		},
+	}
+	adminPlugin := admin.NewAdmin()
+
+	if err := eng.
+		AddConfig(cfg).
+		AddGenerators(tables.Generators).
+		AddPlugins(adminPlugin).
+		Use(r); err != nil {
+		panic(err)
+	}
+
 	err = r.Run(":8080")
 	if err != nil {
 		return
