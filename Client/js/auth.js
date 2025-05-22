@@ -1,14 +1,62 @@
 document.addEventListener("DOMContentLoaded", () => {
-    fetch("/api/auth/check_session.go")
-        .then(res => res.json())
+    fetch("/api/current_user")
+        .then(res => {
+            if (!res.ok) throw new Error("Not authenticated");
+            return res.json();
+        })
         .then(user => {
-            if (user && user.loggedIn) {
+            if (user && user.email) {
                 showUserMenu(user);
+                fillProfile(user);
             }
         })
-        .catch(err => {
-            console.error("Session check failed:", err);
+        .catch(err => console.error("Session check failed:", err));
+
+    const signupForm = document.querySelector('.signup form');
+    if (signupForm) {
+        signupForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            const resp = await fetch('/authorisation', {
+                method: 'POST',
+                body: new FormData(e.target)
+            });
+
+            if (resp.redirected) {
+                window.location.href = resp.url;
+                return;
+            }
+
+            const data = await resp.json();
+            if (resp.ok) {
+                window.location.replace('/html/profile.html');
+            } else {
+                alert(data.error);
+            }
         });
+    }
+
+    const loginForm = document.querySelector('.login form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            const resp = await fetch('/login', {
+                method: 'POST',
+                body: new FormData(e.target)
+            });
+
+            if (resp.redirected) {
+                window.location.href = resp.url;
+                return;
+            }
+
+            const data = await resp.json();
+            if (resp.ok) {
+                window.location.replace('/html/profile.html');
+            } else {
+                alert(data.error || "Login failed");
+            }
+        });
+    }
 });
 
 function showUserMenu(user) {
@@ -38,52 +86,15 @@ function showUserMenu(user) {
     });
 
     document.getElementById("logout-btn").addEventListener("click", () => {
-        fetch("/api/auth/logout.go") 
+        fetch("/logout", { method: "POST" })
             .then(() => location.reload());
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    
-    document.querySelector('.signup form')
-        .addEventListener('submit', async e => {
-            e.preventDefault();
-            const resp = await fetch('/authorisation', {
-                method: 'POST',
-                body: new FormData(e.target)
-            });
-
-            if (resp.redirected) {
-                return;
-            }
-
-            const data = await resp.json();
-            if (resp.ok) {
-                sessionStorage.setItem('user', JSON.stringify(data.user));
-                window.location.replace('/html/profile.html');
-            } else {
-                alert(data.error);
-            }
-        });
-
-});
 function fillProfile(user) {
-    // На любой странице, где есть эти id, заполняем значения
-    const nameField  = document.getElementById('profile-name');
+    const nameField = document.getElementById('profile-name');
     const emailField = document.getElementById('profile-email');
 
-    if (nameField)  nameField.textContent  = user.username ?? (user.first_name + ' ' + user.last_name);
+    if (nameField) nameField.textContent = user.username ?? (user.first_name + ' ' + user.last_name);
     if (emailField) emailField.textContent = user.email;
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    fetch("/api/auth/check_session.go")
-        .then(res => res.json())
-        .then(user => {
-            if (user && user.loggedIn) {
-                showUserMenu(user);   // как раньше
-                fillProfile(user);    // ← новое
-            }
-        })
-        .catch(err => console.error("Session check failed:", err));
-});

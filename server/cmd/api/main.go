@@ -53,10 +53,17 @@ func main() {
 	r.StaticFile("/about_us", "../Client/html/about.html")
 	r.StaticFile("/profile", "../Client/html/profile.html")
 	r.StaticFile("/authorisation", "../Client/html/login.html")
+	r.Static("/html", "../Client/html")
 	r.POST("/authorisation", authHandler.SignUp)
+	r.POST("/login", authHandler.Login)
+	r.POST("/logout", func(c *gin.Context) {
+		c.SetCookie("session_user", "", -1, "/", "", false, true)
+		c.Status(200)
+	})
 	api := r.Group("/api")
 	{
 		api.GET("/cars", carHandler.GetAvailableCars)
+		api.GET("/current_user", authHandler.GetCurrentUser)
 	}
 	cfg := &config.Config{
 		Databases: config.DatabaseList{
