@@ -38,20 +38,22 @@
           </label>
         </div>
       </fieldset>
-      <label for="car-brand">Car Brand:</label>
-      <select id="car-brand" name="car-brand">
+      <label for="brand-input">Car Brand:</label>
+    <input id="brand-input" name="car_brand" list="brand-options" placeholder="Any" />
+    <datalist id="brand-options">
         <option value="">Any</option>
-        <option value="bmw">BMW</option>
-        <option value="audi">Audi</option>
-        <option value="toyota">Toyota</option>
-        <option value="mercedes">Mercedes</option>
-        <option value="ford">Ford</option>
-        <option value="honda">Honda</option>
-        <option value="volkswagen">Volkswagen</option>
-      </select>
+        <option value="BMW"></option>
+        <option value="Audi"></option>
+        <option value="Toyota"></option>
+        <option value="Mercedes"></option>
+        <option value="Ford"></option>
+        <option value="Honda"></option>
+        <option value="Volkswagen"></option>
+      </datalist>
 
-      <label for="Year_of_issues">Year of issues</label>
-      <select id="Year_of_issues" name="Year_of_issues">
+      <label for="year-input">Year of issue:</label>
+      <input id="year-input" name="year_of_issue" list="year-options" placeholder="Any" />
+      <datalist id="year-options">
         <option value="">Any</option>
         <option value="2025">2025</option>
         <option value="2024">2024</option>
@@ -69,7 +71,7 @@
         <option value="2012">2012</option>
         <option value="2011">2011</option>
         <option value="2010">2010</option>
-      </select>
+     </datalist>
 
       <fieldset>
         <legend>Car class</legend>
