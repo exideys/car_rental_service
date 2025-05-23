@@ -1,32 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-</head>
-<body>
-<h2>Профіль користувача</h2>
-<p>Ім’я:   <span id="profile-name"></span></p>
-<p>Email: <span id="profile-email"></span></p>
-</body>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        fetch('/api/current_user')
-            .then(res => {
-                if (!res.ok) throw new Error("Unauthorized");
-                return res.json();
-            })
-            .then(renderProfile)
-            .catch(() => {
-                window.location.href = "/html/login.html";
-            });
-    });
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Profile</title>
+    </head>
+    <body>
+    <h2>Профіль користувача</h2>
+    <p>Ім’я:   <span id="profile-name"></span></p>
+    <p>Email: <span id="profile-email"></span></p>
+    <p>Телефон: <span id="profile-telephone"></span></p>
+    <p>Дата народження: <span id="profile-birth"></span></p>
+    <p>Дата реєстрації: <span id="profile-created"></span></p>
+    <p>VIP статус: <span id="profile-vip"></span></p>
 
-    function renderProfile(user) {
-        document.querySelector('#profile-name').textContent =
-            user.username ?? `${user.first_name} ${user.last_name}`;
-        document.querySelector('#profile-email').textContent = user.email;
-    }
-</script>
-</html>
+    </body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/api/current_user')
+                .then(res => {
+                    if (!res.ok) throw new Error("Unauthorized");
+                    return res.json();
+                })
+                .then(renderProfile)
+                .catch(() => {
+                    window.location.href = "/html/login.html";
+                });
+        });
+
+        function renderProfile(user) {
+            document.querySelector('#profile-name').textContent =
+                user.username ?? `${user.first_name} ${user.last_name}`;
+            document.querySelector('#profile-email').textContent = user.email;
+            document.querySelector('#profile-telephone').textContent = user.telephone || '—';
+            document.querySelector('#profile-birth').textContent = user.birth_date;
+            document.querySelector('#profile-created').textContent = user.created_at;
+            document.querySelector('#profile-vip').textContent = user.is_vip ? '⭐ Так' : 'Ні';
+        }
+    </script>
+    </html>
