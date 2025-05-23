@@ -68,10 +68,10 @@ function showUserMenu(user) {
     profileContainer.className = "profile-menu";
 
     profileContainer.innerHTML = `
-        <img src="${user.avatar || '/assets/img/default-avatar.png'}" alt="Avatar" class="avatar-icon" />
+        <img src="${user.avatar || '/assets/profile.png'}" alt="Avatar" class="avatar-icon" />
         <ul class="dropdown-menu hidden">
-            <li><a href="/html/profile.html">My Profile</a></li>
-            <li><a href="/html/orders.html">My Orders</a></li>
+            <li><a href="/html/profile.html">Profile</a></li>
+            <li><a href="/html/orders.html">Orders</a></li>
             <li id="logout-btn">Logout</li>
         </ul>
     `;

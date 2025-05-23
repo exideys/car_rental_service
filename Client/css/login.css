@@ -191,4 +191,12 @@ nav a:hover {
   .footer nav a:hover {
 	color: #000;
   }
-  
+  #logout-btn {
+    padding: 8px 12px;
+    transition: background-color 0.3s ease;
+}
+
+#logout-btn:hover {
+    background-color: red;
+    color: white;
+}
