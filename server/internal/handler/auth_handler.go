@@ -28,7 +28,13 @@ func (h *AuthHandler) SignUp(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	c.Redirect(http.StatusSeeOther, "/authorisation")
+
+	client, err := h.svc.GetByEmail(c.PostForm("email"))
+	if err == nil {
+		c.SetCookie("session_user", client.Email, 3600, "/", "", false, true)
+	}
+
+	c.Redirect(http.StatusSeeOther, "/html/index.html")
 
 }
 
@@ -44,7 +50,7 @@ func (h *AuthHandler) Login(c *gin.Context) {
 
 	c.SetCookie("session_user", client.Email, 3600, "/", "", false, true)
 
-	c.Redirect(http.StatusSeeOther, "/profile")
+	c.Redirect(http.StatusSeeOther, "/html/index.html")
 }
 
 func (h *AuthHandler) GetCurrentUser(c *gin.Context) {
@@ -64,5 +70,9 @@ func (h *AuthHandler) GetCurrentUser(c *gin.Context) {
 		"first_name": client.FirstName,
 		"last_name":  client.LastName,
 		"email":      client.Email,
+		"telephone":  client.Telephone,
+		"birth_date": client.BirthDate.Format("2006-01-02"),
+		"is_vip":     client.IsVIP,
+		"created_at": client.CreatedAt.Format("2006-01-02 15:04:05"),
 	})
 }
