@@ -86,9 +86,12 @@ func main() {
 	}
 	adminPlugin := admin.NewAdmin()
 
+	for name, gen := range tables.Generators {
+		adminPlugin.AddGenerator(name, gen)
+	}
+
 	if err := eng.
 		AddConfig(cfg).
-		AddGenerators(tables.Generators).
 		AddPlugins(adminPlugin).
 		Use(r); err != nil {
 		panic(err)

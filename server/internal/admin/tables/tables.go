@@ -23,17 +23,14 @@ import "github.com/GoAdminGroup/go-admin/plugins/admin/modules/table"
 //
 // example end
 var Generators = map[string]table.Generator{
-
 	"cars":                 GetCarsTable,
 	"client":               GetClientTable,
-	"client_evaluation":    GetClientevaluationTable,
-	"client_profile":       GetClientprofileTable,
-	"client_rating_view":   GetClientratingviewTable,
+	"client_evaluation":    GetClientEvaluationTable,
+	"client_profile":       GetClientProfileTable,
+	"client_rating_view":   GetClientRatingViewTable,
 	"images":               GetImagesTable,
 	"order":                GetOrderTable,
 	"payment":              GetPaymentTable,
-	"payment_details_view": GetPaymentdetailsviewTable,
+	"payment_details_view": GetPaymentDetailsViewTable,
 	"tariff":               GetTariffTable,
-
-	// generators end
 }
