@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>Номер: ${car.plate_number}</p>
             <p>Статус: ${car.status}</p>
             <p>Класс: ${car.car_class}</p>
-            <p>Ціна: ${car.daily_price}</p>
+            <p>Ціна: ${car.daily_price}₴</p>
             </div>
          </div>
   <button class="order-button">Замовити</button>
@@ -40,7 +40,7 @@ function renderCars(cars) {
         <p>Номер: ${car.plate_number}</p>
         <p>Статус: ${car.status}</p>
         <p>Класс: ${car.car_class}</p>
-        <p>Ціна: ${car.daily_price}</p>
+        <p>Ціна: ${car.daily_price}₴ </p>
         </div>
   </div>
   <button class="order-button">Замовити</button>
