@@ -1,0 +1,69 @@
+package handler
+
+import (
+	"github.com/exideys/car_rental_service/internal/repository"
+	"net/http"
+	"time"
+
+	"github.com/exideys/car_rental_service/internal/service"
+	"github.com/gin-gonic/gin"
+)
+
+type OrderRequest struct {
+	CarID     uint   `json:"car_id" binding:"required"`
+	StartDate string `json:"start_date" binding:"required,datetime=2006-01-02"`
+	EndDate   string `json:"end_date" binding:"required,datetime=2006-01-02"`
+}
+
+type OrderHandler struct {
+	svc      *service.OrderService
+	authRepo repository.AuthRepository
+}
+
+func NewOrderHandler(svc *service.OrderService) *OrderHandler {
+	return &OrderHandler{svc: svc}
+}
+
+func (h *OrderHandler) Create(c *gin.Context) {
+	emailIfc, exists := c.Get("email")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized: email not found in context"})
+		return
+	}
+	email, error := emailIfc.(string)
+	if !error || email == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized: invalid email in context"})
+		return
+	}
+
+	client, err := h.authRepo.FindByEmail(c.Request.Context(), email)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "client not found"})
+		return
+	}
+
+	var req OrderRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	start, err := time.Parse("2006-01-02", req.StartDate)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid start_date format"})
+		return
+	}
+	end, err := time.Parse("2006-01-02", req.EndDate)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid end_date format"})
+		return
+	}
+
+	order, err := h.svc.Create(client.ClientID, req.CarID, start, end)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, order)
+}

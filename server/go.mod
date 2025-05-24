@@ -7,7 +7,6 @@ require (
 	github.com/GoAdminGroup/themes v0.0.48
 	github.com/gin-contrib/sessions v1.0.3
 	github.com/gin-gonic/gin v1.10.0
-	github.com/go-echarts/go-echarts/v2 v2.5.4
 	golang.org/x/crypto v0.37.0
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gorm v1.26.0

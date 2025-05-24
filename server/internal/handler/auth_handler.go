@@ -10,6 +10,19 @@ type AuthHandler struct {
 	svc service.AuthService
 }
 
+func AuthMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		email, err := c.Cookie("current_user")
+		if err != nil || email == "" {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "not authenticated"})
+			c.Abort()
+			return
+		}
+		c.Set("email", email)
+		c.Next()
+	}
+}
+
 func NewAuthHandler(svc service.AuthService) *AuthHandler {
 	return &AuthHandler{svc: svc}
 }
