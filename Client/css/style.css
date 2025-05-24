@@ -274,3 +274,36 @@ nav a:hover {
   background-color: #333;
   transform: translateY(-2px);
 }
+/* по замовчуванню — прихована */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* коли додаємо клас show — показати */
+.modal-overlay.show {
+  display: flex;
+}
+
+.modal-window {
+  background: #fff;
+  width: 50vw;
+  height: 50vh;
+  padding: 1rem;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  border-radius: 8px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.5rem; right: 0.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
