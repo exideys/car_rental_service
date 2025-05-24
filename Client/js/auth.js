@@ -70,8 +70,7 @@ function showUserMenu(user) {
     profileContainer.innerHTML = `
         <img src="${user.avatar || '/assets/profile.png'}" alt="Avatar" class="avatar-icon" />
         <ul class="dropdown-menu hidden">
-            <li><a href="/html/profile.html">Profile</a></li>
-            <li><a href="/html/orders.html">Orders</a></li>
+            <li><a href="/html/profile.html"id="profile-btn">Profile</a></li>
             <li id="logout-btn">Logout</li>
         </ul>
     `;
@@ -98,3 +97,13 @@ function fillProfile(user) {
     if (nameField) nameField.textContent = user.username ?? (user.first_name + ' ' + user.last_name);
     if (emailField) emailField.textContent = user.email;
 }
+function loadCSS(path) {
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = "../css/profilemenu.css";
+
+  document.head.append(link);
+}
+
+// подключаем файл style.css из той же папки
+loadCSS('profilemenu.css');

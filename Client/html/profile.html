@@ -1,41 +1,79 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Profile</title>
-    </head>
-    <body>
-    <h2>Профіль користувача</h2>
-    <p>Ім’я:   <span id="profile-name"></span></p>
-    <p>Email: <span id="profile-email"></span></p>
-    <p>Телефон: <span id="profile-telephone"></span></p>
-    <p>Дата народження: <span id="profile-birth"></span></p>
-    <p>Дата реєстрації: <span id="profile-created"></span></p>
-    <p>VIP статус: <span id="profile-vip"></span></p>
+<!-- profile.html -->
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Профіль користувача</title>
+  <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="../html/index.html">Home</a>
+      <a href="../html/catalog.html">Catalog</a>
+      <a href="../html/contacts.html">Contacts</a>
+      <a href="../html/about.html">About Us</a>
+    </nav>
+    <a href="../html/login.html" class="auth-btn">Login/Sign up</a>
+  </header>
 
-    </body>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('/api/current_user')
-                .then(res => {
-                    if (!res.ok) throw new Error("Unauthorized");
-                    return res.json();
-                })
-                .then(renderProfile)
-                .catch(() => {
-                    window.location.href = "/html/login.html";
-                });
+  <div class="profile-container">
+    <div class="profile-left">
+      <img src="../assets/profile.png" alt="Profile Picture" class="profile-picture">
+      <button id="logout-prf">Logout</button>
+    </div>
+    <div class="profile-info">
+      <h2 class="profile-title">User Profile</h2>
+      <div class="profile-field">Name: <span id="profile-name"></span></div>
+      <div class="profile-field">Email: <span id="profile-email"></span></div>
+      <div class="profile-field">Number: <span id="profile-telephone"></span></div>
+      <div class="profile-field">Date of birth: <span id="profile-birth"></span></div>
+      <div class="profile-field">Date of registration: <span id="profile-created"></span></div>
+      <div class="profile-field">Vip status: <span id="profile-vip"></span></div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('/api/current_user')
+        .then(res => {
+          if (!res.ok) throw new Error("Unauthorized");
+          return res.json();
+        })
+        .then(renderProfile)
+        .catch(() => {
+          window.location.href = "/html/login.html";
         });
 
-        function renderProfile(user) {
-            document.querySelector('#profile-name').textContent =
-                user.username ?? `${user.first_name} ${user.last_name}`;
-            document.querySelector('#profile-email').textContent = user.email;
-            document.querySelector('#profile-telephone').textContent = user.telephone || '—';
-            document.querySelector('#profile-birth').textContent = user.birth_date;
-            document.querySelector('#profile-created').textContent = user.created_at;
-            document.querySelector('#profile-vip').textContent = user.is_vip ? '⭐ Так' : 'Ні';
-        }
-    </script>
-    </html>
+      document.getElementById("logout-prf")
+        .addEventListener("click", () => {
+          fetch("/logout", { method: "POST" })
+            .then(() => window.location.href = "/html/login.html");
+        });
+    });
+
+    function renderProfile(user) {
+      document.querySelector('#profile-name').textContent =
+        user.username ?? `${user.first_name} ${user.last_name}`;
+      document.querySelector('#profile-email').textContent = user.email;
+      document.querySelector('#profile-telephone').textContent = user.telephone || '—';
+      document.querySelector('#profile-birth').textContent = user.birth_date;
+      document.querySelector('#profile-created').textContent = user.created_at;
+      document.querySelector('#profile-vip').textContent = user.is_vip ? '⭐ Так' : 'Ні';
+    }
+  </script>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 RentAuto. All rights reserved.</p>
+      <nav>
+        <a href="../html/privacy.html">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="../html/contacts.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+<script src = '../js/auth.js'></script>
+</html>
