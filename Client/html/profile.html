@@ -3,7 +3,7 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Профіль користувача</title>
   <link rel="stylesheet" href="../css/profile.css">
 </head>
@@ -18,18 +18,19 @@
     <a href="../html/login.html" class="auth-btn">Login/Sign up</a>
   </header>
 
-  <h2 class="profile-title">Профіль користувача</h2>
-
   <div class="profile-container">
-    <img src="../assets/profile.png" alt="Profile Picture" class="profile-picture">
-
+    <div class="profile-left">
+      <img src="../assets/profile.png" alt="Profile Picture" class="profile-picture">
+      <button id="logout-prf">Logout</button>
+    </div>
     <div class="profile-info">
-      <p>Ім’я: <span id="profile-name"></span></p>
-      <p>Email: <span id="profile-email"></span></p>
-      <p>Телефон: <span id="profile-telephone"></span></p>
-      <p>Дата народження: <span id="profile-birth"></span></p>
-      <p>Дата реєстрації: <span id="profile-created"></span></p>
-      <p>VIP статус: <span id="profile-vip"></span></p>
+      <h2 class="profile-title">User Profile</h2>
+      <div class="profile-field">Name: <span id="profile-name"></span></div>
+      <div class="profile-field">Email: <span id="profile-email"></span></div>
+      <div class="profile-field">Number: <span id="profile-telephone"></span></div>
+      <div class="profile-field">Date of birth: <span id="profile-birth"></span></div>
+      <div class="profile-field">Date of registration: <span id="profile-created"></span></div>
+      <div class="profile-field">Vip status: <span id="profile-vip"></span></div>
     </div>
   </div>
 
@@ -43,6 +44,12 @@
         .then(renderProfile)
         .catch(() => {
           window.location.href = "/html/login.html";
+        });
+
+      document.getElementById("logout-prf")
+        .addEventListener("click", () => {
+          fetch("/logout", { method: "POST" })
+            .then(() => window.location.href = "/html/login.html");
         });
     });
 
@@ -67,7 +74,6 @@
       </nav>
     </div>
   </footer>
-
-  <script src="../js/auth.js"></script>
 </body>
+<script src = '../js/auth.js'></script>
 </html>
