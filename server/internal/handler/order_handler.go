@@ -2,11 +2,10 @@ package handler
 
 import (
 	"github.com/exideys/car_rental_service/internal/repository"
-	"net/http"
-	"time"
-
 	"github.com/exideys/car_rental_service/internal/service"
 	"github.com/gin-gonic/gin"
+	"net/http"
+	"time"
 )
 
 type OrderRequest struct {

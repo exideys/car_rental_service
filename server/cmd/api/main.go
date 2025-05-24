@@ -24,7 +24,6 @@ func main() {
 	//Connection to a database
 	db := configs.InitDB()
 	//Repositories
-	authMiddleware := handler.AuthMiddleware()
 	carRepo := repository.NewCarRepository(db)
 	authRepo := repository.NewAuthRepository(db)
 	orderRepo := repository.NewOrderRepository(db)
@@ -59,7 +58,7 @@ func main() {
 	r.StaticFile("/authorisation", "../Client/html/login.html")
 	r.Static("/html", "../Client/html")
 	r.POST("/authorisation", authHandler.SignUp)
-	r.POST("/order", authMiddleware, orderHandler.Create)
+	r.POST("/order", orderHandler.Create)
 	r.POST("/login", authHandler.Login)
 	r.POST("/logout", func(c *gin.Context) {
 		c.SetCookie("session_user", "", -1, "/", "", false, true)
