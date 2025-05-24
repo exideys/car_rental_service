@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(res => res.json())
     .then(cars => renderCars(cars, list));
 
-  // 3) Обработчик для формы фильтра (на страницах без неё просто пропустит)
   const form = document.getElementById('filter-form');
   if (form) {
     form.addEventListener('submit', async e => {
@@ -37,6 +36,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+ function validateDates() {
+    // если обе даты выбраны и начальная позже конечной
+    if (startInput.value && endInput.value && startInput.value > endInput.value) {
+      // делаем сообщение об ошибке и блокируем сабмит
+      endInput.setCustomValidity('End Date не может быть раньше Start Date');
+      submitBtn.disabled = true;
+    } else {
+      // сбрасываем ошибку и разблокируем
+      endInput.setCustomValidity('');
+      submitBtn.disabled = false;
+    }
+  }
+
+  // Динамически ограничиваем выбор в полях
+  startInput.addEventListener('change', () => {
+    // минимальная End Date = выбранная Start Date
+    endInput.min = startInput.value;
+    validateDates();
+  });
+
+  endInput.addEventListener('change', () => {
+    // максимальная Start Date = выбранная End Date
+    startInput.max = endInput.value;
+    validateDates();
+  });
+
+  // дополнительная проверка при попытке отправки
+  form.addEventListener('submit', e => {
+    validateDates();
+    if (!form.checkValidity()) {
+      // отменяем отправку, если есть ошибка
+      e.preventDefault();
+    }
+  });
 
 // Вынесем рендер в функцию, принимающую контейнер
 function renderCars(cars, container) {
