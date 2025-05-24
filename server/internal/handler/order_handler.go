@@ -1,10 +1,12 @@
 package handler
 
 import (
+	"encoding/json"
 	"github.com/exideys/car_rental_service/internal/repository"
 	"github.com/exideys/car_rental_service/internal/service"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"net/url"
 	"time"
 )
 
@@ -24,13 +26,23 @@ func NewOrderHandler(svc *service.OrderService) *OrderHandler {
 }
 
 func (h *OrderHandler) Create(c *gin.Context) {
-	emailIfc, exists := c.Get("email")
-	if !exists {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized: email not found in context"})
+	coockie, err := c.Cookie("car_rental_session")
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
-	email, error := emailIfc.(string)
-	if !error || email == "" {
+	decodedValue, err := url.QueryUnescape(coockie)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+		return
+	}
+	var data map[string]string
+	if err := json.Unmarshal([]byte(decodedValue), &data); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+		return
+	}
+	email, ok := data["email"]
+	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized: invalid email in context"})
 		return
 	}
