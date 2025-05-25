@@ -98,10 +98,12 @@
   <div id="orderModal" class="modal-overlay">
   <div class="modal-window">
     <span class="modal-close">&times;</span>
+    <div id="order-summary"></div>
     <h2>Підтвердження замовлення</h2>
     <form id="order-form">
+      <input type="hidden" name="daily_price" id="dailyPriceInput">
       <input type="hidden" name="car_id" id="order-car-id" />
-
+      <input type="hidden" name="client_id" id="clientIDInput">
       <div>
         <label for="start-date">Start Date:</label><br>
         <input type="date" id="start-date" name="start_date" required>

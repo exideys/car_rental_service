@@ -67,6 +67,7 @@ func (h *AuthHandler) GetCurrentUser(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
+		"client_id":  client.ClientID,
 		"first_name": client.FirstName,
 		"last_name":  client.LastName,
 		"email":      client.Email,

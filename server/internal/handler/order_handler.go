@@ -12,10 +12,11 @@ type OrderHandler interface {
 	GetAllOrders(c *gin.Context)
 }
 type OrderRequest struct {
-	Email     string `json:"email"`
-	CarID     uint   `json:"car_id" binding:"required"`
-	StartDate string `json:"start_date" binding:"required,datetime=2006-01-02"`
-	EndDate   string `json:"end_date" binding:"required,datetime=2006-01-02"`
+	Email      string `json:"email"`
+	CarID      uint   `json:"car_id" binding:"required"`
+	StartDate  string `json:"start_date" binding:"required,datetime=2006-01-02"`
+	EndDate    string `json:"end_date" binding:"required,datetime=2006-01-02"`
+	DailyPrice uint   `json:"daily_price"`
 }
 
 type orderHandler struct {
@@ -81,7 +82,7 @@ func (h *orderHandler) Create(c *gin.Context) {
 		return
 	}
 
-	order, err := h.svc.Create(client.ClientID, req.CarID, start, end)
+	order, err := h.svc.Create(client.ClientID, req.CarID, req.DailyPrice, start, end)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

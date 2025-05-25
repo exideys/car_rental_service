@@ -1,12 +1,14 @@
 package repository
 
 import (
+	"context"
 	"github.com/exideys/car_rental_service/internal/models"
 	"gorm.io/gorm"
 )
 
 type CarRepository interface {
 	GetAvailableCars(f models.CarFilter) ([]models.Car, error)
+	GetCarByID(ctx context.Context, id uint) (*models.Car, error)
 }
 
 type carRepository struct {
@@ -40,4 +42,16 @@ func (r *carRepository) GetAvailableCars(f models.CarFilter) ([]models.Car, erro
 		return nil, err
 	}
 	return cars, nil
+}
+
+func (r *carRepository) GetCarByID(ctx context.Context, id uint) (*models.Car, error) {
+	var car models.Car
+	if err := r.db.
+		WithContext(ctx).
+		Where("car_id = ?", id).
+		First(&car).
+		Error; err != nil {
+		return nil, err
+	}
+	return &car, nil
 }

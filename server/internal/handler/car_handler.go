@@ -2,12 +2,14 @@ package handler
 
 import (
 	"github.com/exideys/car_rental_service/internal/models"
-	"net/http"
-
 	"github.com/exideys/car_rental_service/internal/service"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
+type request struct {
+	ID uint `form:"car_id" binding:"required"`
+}
 type CarHandler struct {
 	svc service.CarService
 }
@@ -28,4 +30,19 @@ func (h *CarHandler) GetAvailableCars(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, cars)
+}
+
+func (h *CarHandler) GetCar(c *gin.Context) {
+	var req request
+	if err := c.BindQuery(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid car id"})
+		return
+	}
+
+	car, err := h.svc.GetCar(c.Request.Context(), req.ID)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "car not found"})
+		return
+	}
+	c.JSON(http.StatusOK, car)
 }

@@ -61,6 +61,7 @@ func main() {
 	r.POST("/order", orderHandler.Create)
 	r.GET("/orders", orderHandler.GetAllOrders)
 	r.POST("/login", authHandler.Login)
+	r.GET("/car_id", carHandler.GetCar)
 	r.POST("/logout", func(c *gin.Context) {
 		c.SetCookie("session_user", "", -1, "/", "", false, true)
 		c.Status(200)
