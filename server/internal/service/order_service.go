@@ -8,15 +8,20 @@ import (
 	"github.com/exideys/car_rental_service/internal/repository"
 )
 
-type OrderService struct {
-	repo *repository.OrderRepository
+type OrderService interface {
+	Create(clientID, carID uint, start, end time.Time) (*models.Order, error)
+	GetByEmail(email string) (*models.Client, error)
+	GetAllOrders(email string) ([]models.Order, error)
+}
+type orderService struct {
+	repo repository.OrderRepository
 }
 
-func NewOrderService(repo *repository.OrderRepository) *OrderService {
-	return &OrderService{repo: repo}
+func NewOrderService(repo repository.OrderRepository) OrderService {
+	return &orderService{repo: repo}
 }
 
-func (s *OrderService) Create(clientID, carID uint, start, end time.Time) (*models.Order, error) {
+func (s *orderService) Create(clientID, carID uint, start, end time.Time) (*models.Order, error) {
 	if clientID == 0 {
 		return nil, errors.New("unauthorized: clientID is required")
 	}
@@ -42,4 +47,15 @@ func (s *OrderService) Create(clientID, carID uint, start, end time.Time) (*mode
 		return nil, err
 	}
 	return order, nil
+}
+func (s *orderService) GetByEmail(email string) (*models.Client, error) {
+	a, err := s.repo.FindByEmail(email)
+	if err != nil {
+		return nil, err
+	}
+	return a, nil
+}
+
+func (s *orderService) GetAllOrders(email string) ([]models.Order, error) {
+	return s.repo.GetAllOrders(email)
 }

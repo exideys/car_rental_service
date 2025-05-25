@@ -5,10 +5,9 @@ import (
 )
 
 type Order struct {
-	OrderID   uint      `gorm:"primaryKey" json:"id"`
+	OrderID   uint      `gorm:"column:order_id;primaryKey;autoIncrement" json:"order_id"`
 	ClientID  uint      `json:"client_id"`
 	CarID     uint      `json:"car_id"`
-	TariffID  uint      `json:"tariff_id"`
 	IsPaid    bool      `json:"is_paid"`
 	StartDate time.Time `json:"start_date"`
 	EndDate   time.Time `json:"end_date"`

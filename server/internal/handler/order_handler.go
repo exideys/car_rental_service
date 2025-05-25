@@ -1,34 +1,35 @@
 package handler
 
 import (
-	"encoding/json"
-	"github.com/exideys/car_rental_service/internal/repository"
 	"github.com/exideys/car_rental_service/internal/service"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"net/url"
 	"time"
 )
 
+type OrderHandler interface {
+	Create(c *gin.Context)
+	GetAllOrders(c *gin.Context)
+}
 type OrderRequest struct {
+	Email     string `json:"email"`
 	CarID     uint   `json:"car_id" binding:"required"`
 	StartDate string `json:"start_date" binding:"required,datetime=2006-01-02"`
 	EndDate   string `json:"end_date" binding:"required,datetime=2006-01-02"`
 }
 
-type OrderHandler struct {
-	svc      *service.OrderService
-	authRepo repository.AuthRepository
+type orderHandler struct {
+	svc service.OrderService
 }
 
-func NewOrderHandler(svc *service.OrderService) *OrderHandler {
-	return &OrderHandler{svc: svc}
+func NewOrderHandler(svc service.OrderService) OrderHandler {
+	return &orderHandler{svc: svc}
 }
 
-func (h *OrderHandler) Create(c *gin.Context) {
-	coockie, err := c.Cookie("car_rental_session")
+func (h *orderHandler) Create(c *gin.Context) {
+	/*coockie, err := c.Cookie("current_user")
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "err.Error()"})
 		return
 	}
 	decodedValue, err := url.QueryUnescape(coockie)
@@ -45,17 +46,27 @@ func (h *OrderHandler) Create(c *gin.Context) {
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized: invalid email in context"})
 		return
-	}
-
-	client, err := h.authRepo.FindByEmail(c.Request.Context(), email)
-	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "client not found"})
-		return
-	}
+	}*/
+	//const payload = {
+	//      email:    'sad@gmail.com',
+	//      car_id:     Number(fd.get('car_id')),
+	//      start_date: fd.get('start_date'),
+	//      end_date:   fd.get('end_date')
+	//    };
 
 	var req OrderRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if req.Email == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "email is required"})
+		return
+	}
+	client, err := h.svc.GetByEmail(req.Email)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "client not found"})
 		return
 	}
 
@@ -77,4 +88,17 @@ func (h *OrderHandler) Create(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, order)
+}
+
+func (h *orderHandler) GetAllOrders(c *gin.Context) {
+	var email string
+	if err := c.ShouldBindJSON(&email); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+	orderss, err := h.svc.GetAllOrders(email)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, orderss)
 }
