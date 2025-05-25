@@ -125,7 +125,6 @@ func (s *authService) Login(ctx context.Context, email, password string) (*model
 	if client.IsBlocked {
 		return nil, errors.New("account is blocked")
 	}
-
 	return client, nil
 }
 
