@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	ClientID  int64     `json:"client_id"`
+	ClientID  uint      `json:"client_id"`
 	FirstName string    `json:"first_name"`
 	LastName  string    `json:"last_name"`
 	Email     string    `json:"email"`

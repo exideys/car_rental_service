@@ -99,17 +99,19 @@
   <div class="modal-window">
     <span class="modal-close">&times;</span>
     <h2>Підтвердження замовлення</h2>
-    <form action="#" method="get">
-    <div>
-      <label for="start-date">Start Date:</label><br>
-      <input type="date" id="start-date" name="start-date" required>
-    </div>
-    <div>
-      <label for="end-date">End Date:</label><br>
-      <input type="date" id="end-date" name="end-date" required>
-    </div>
-    <button type="submit">Submit</button>
-  </form>
+    <form id="order-form">
+      <input type="hidden" name="car_id" id="order-car-id" />
+
+      <div>
+        <label for="start-date">Start Date:</label><br>
+        <input type="date" id="start-date" name="start_date" required>
+      </div>
+      <div>
+        <label for="end-date">End Date:</label><br>
+        <input type="date" id="end-date" name="end_date" required>
+      </div>
+      <button type="submit" id="order-submit">Submit</button>
+    </form>
   </div>
 </div>
 
