@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/exideys/car_rental_service/internal/models"
@@ -34,7 +33,6 @@ func (s *orderService) Create(clientID, carID, DailyPrice uint, start, end time.
 	if !end.After(start) {
 		return nil, errors.New("invalid rental period: end date must be after start date")
 	}
-	fmt.Println(DailyPrice)
 	if dailyPrice := DailyPrice * uint(end.Sub(start).Hours()/24); dailyPrice == 0 {
 		return nil, errors.New("invalid price")
 	}

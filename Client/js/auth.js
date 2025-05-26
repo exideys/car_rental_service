@@ -105,5 +105,4 @@ function loadCSS(path) {
   document.head.append(link);
 }
 
-// подключаем файл style.css из той же папки
 loadCSS('profilemenu.css');

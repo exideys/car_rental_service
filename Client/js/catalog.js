@@ -1,12 +1,10 @@
-// catalog.js
 document.addEventListener('DOMContentLoaded', () => {
-  // --- 1) Подключаем CSS ---
+  
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   link.href = '../css/card.css';
   document.head.appendChild(link);
 
-  // --- 2) Элементы страницы ---
   const list           = document.querySelector('.car-list');
   const filterForm     = document.getElementById('filter-form');
   const modal          = document.getElementById('orderModal');
@@ -20,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const dailyPriceInput= orderForm.querySelector('#dailyPriceInput');
   const clientIDInput  = orderForm.querySelector('#clientIDInput');
 
-  // --- 2.1) Поле с итоговой суммой ---
+  
   const totalDiv = document.createElement('div');
   totalDiv.id = 'total-sum-container';
   totalDiv.style.flex = '1 1 100%';
@@ -30,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   `;
   orderForm.insertBefore(totalDiv, submitBtn);
 
-  // --- 3) Загрузка и фильтрация ---
+  
   async function loadCars(params = '') {
     const cars = await fetch(`/api/cars${params}`).then(r => r.json());
     renderCars(cars);
@@ -42,13 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCars(`?${qs}`);
   });
 
-  // --- 4) Закрытие модалки ---
+  
   closeBtn.addEventListener('click', () => modal.classList.remove('show'));
   modal.addEventListener('click', e => {
     if (e.target === modal) modal.classList.remove('show');
   });
 
-  // --- 5) Подсчёт и валидация дат ---
+  
   function updateTotal() {
     if (startInput.value && endInput.value && dailyPriceInput.value) {
       const d1 = new Date(startInput.value);
@@ -83,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     validateDates();
   });
 
-  // --- 6) Сабмит заказа ---
+  
   orderForm.addEventListener('submit', async e => {
     e.preventDefault();
     validateDates();
@@ -116,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       const order = await resp.json();
-      alert(`Замовлення #${order.order_id} successfully created.`);
+      alert(`Order #${order.order_id} successfully created.`);
       orderForm.reset();
       document.getElementById('total-sum').textContent = '0₴';
       modal.classList.remove('show');
@@ -125,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- 7) Рендер карточек и обработка клика ---
+  
   function renderCars(cars) {
     list.innerHTML = '';
     cars.forEach(car => {
