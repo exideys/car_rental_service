@@ -92,14 +92,16 @@ func (h *orderHandler) Create(c *gin.Context) {
 }
 
 func (h *orderHandler) GetAllOrders(c *gin.Context) {
-	var email string
-	if err := c.ShouldBindJSON(&email); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	email := c.Query("email")
+	if email == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "email query parameter is required"})
+		return
 	}
-	orderss, err := h.svc.GetAllOrders(email)
+
+	orders, err := h.svc.GetAllOrders(email)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, orderss)
+	c.JSON(http.StatusOK, orders)
 }
