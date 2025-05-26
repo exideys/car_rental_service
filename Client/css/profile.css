@@ -212,5 +212,48 @@ nav a:hover {
     color: white;
 }
 
+.orders-section {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
 
-/* Стилі для контейнера меню */
+#orders-table {
+  border-collapse: separate;
+  border-spacing: 0 14px; /* відступ між рядками */
+  width: 100%;
+}
+
+#orders-table th,
+#orders-table td {
+  background-color: #f9f9f9;
+  padding: 14px 18px;
+  border-radius: 12px;
+  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.05),
+              inset -2px -2px 6px rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+  color: #333;
+  text-align: left;
+}
+
+/* Заголовки */
+#orders-table th {
+  background-color: #ececec;
+  font-weight: 600;
+  box-shadow: none;
+  text-align: center;
+}
+
+/* Без анімацій */
+#orders-table td {
+  transform: none !important;
+}
+
+/* Центрування тексту у Loading/Error */
+#orders-table td[colspan] {
+  text-align: center;
+}
