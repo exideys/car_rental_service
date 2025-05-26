@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   totalDiv.id = 'total-sum-container';
   totalDiv.style.flex = '1 1 100%';
   totalDiv.innerHTML = `
-    <label for="total-sum"><b>Всього:</b></label>
+    <label for="total-sum"><b>Total price:</b></label>
     <div id="total-sum">0₴</div>
   `;
   orderForm.insertBefore(totalDiv, submitBtn);
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function validateDates() {
     if (startInput.value && endInput.value && startInput.value > endInput.value) {
-      endInput.setCustomValidity('End Date не може бути раніше Start Date');
+      endInput.setCustomValidity('End Date cannot be before Start Date');
       submitBtn.disabled = true;
     } else {
       endInput.setCustomValidity('');
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const userResp = await fetch('/api/current_user');
     if (!userResp.ok) {
-      alert('Будь ласка, увійдіть перед оформленням замовлення.');
+      alert('Please log in before placing an order.');
       return;
     }
     const user = await userResp.json();
@@ -112,16 +112,16 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       if (!resp.ok) {
         const err = await resp.json().catch(() => ({}));
-        alert(err.error || 'Не вдалося створити замовлення.');
+        alert(err.error || 'Failed to create order. Please try again.');
         return;
       }
       const order = await resp.json();
-      alert(`Замовлення #${order.order_id} успішно створено.`);
+      alert(`Замовлення #${order.order_id} successfully created.`);
       orderForm.reset();
       document.getElementById('total-sum').textContent = '0₴';
       modal.classList.remove('show');
     } catch {
-      alert('Помилка мережі. Спробуйте пізніше.');
+      alert('Network error. Try again later..');
     }
   });
 
@@ -136,14 +136,14 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="car-card-content">
           <img src="${car.image_path}" alt="">
           <div class="car-details">
-            <p>Рік: ${car.year_of_issue}</p>
-            <p>Номер: ${car.plate_number}</p>
-            <p>Статус: ${car.status}</p>
-            <p>Клас: ${car.car_class}</p>
-            <p>Ціна: ${car.daily_price}₴</p>
+            <p>Year of issues: ${car.year_of_issue}</p>
+            <p>Plate number: ${car.plate_number}</p>
+            <p>Status: ${car.status}</p>
+            <p>Class: ${car.car_class}</p>
+            <p>Daily price: ${car.daily_price}₴</p>
           </div>
         </div>
-        <button class="order-button">Замовити</button>
+        <button class="order-button">Order</button>
       `;
       list.appendChild(card);
 
@@ -162,13 +162,13 @@ document.addEventListener('DOMContentLoaded', () => {
         dailyPriceInput.value = carData.daily_price;
         clientIDInput.value    = userData.client_id;
         summaryDiv.innerHTML = `
-          <h4>Підтвердження замовлення</h4>
+          <h4>Accept order</h4>
           <p><b>Name:</b> ${userData.first_name || '-'}</p>
           <p><b>Surname:</b> ${userData.last_name  || '-'}</p>
           <p><b>Email:</b> ${userData.email         || '-'}</p>
-          <p><b>Авто:</b> ${carData.brand || '-'} ${carData.model || '-'}</p>
-          <p><b>Номер:</b> ${carData.plate_number || '-'}</p>
-          <p><b>Ціна/день:</b> ${carData.daily_price != null ? carData.daily_price + '₴' : '-'}</p>
+          <p><b>Car:</b> ${carData.brand || '-'} ${carData.model || '-'}</p>
+          <p><b>Plate number:</b> ${carData.plate_number || '-'}</p>
+          <p><b>Daily price:</b> ${carData.daily_price != null ? carData.daily_price + '₴' : '-'}</p>
         `;
         document.getElementById('total-sum').textContent = '0₴';
         modal.classList.add('show');
