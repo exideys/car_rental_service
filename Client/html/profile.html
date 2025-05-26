@@ -30,7 +30,7 @@
       <div class="profile-field">Number: <span id="profile-telephone"></span></div>
       <div class="profile-field">Date of birth: <span id="profile-birth"></span></div>
       <div class="profile-field">Date of registration: <span id="profile-created"></span></div>
-      <div class="profile-field">Vip status: <span id="profile-vip"></span></div>
+      <div class="profile-field">VIP status: <span id="profile-vip"></span></div>
     </div>
   </div>
 
@@ -60,7 +60,7 @@
       document.querySelector('#profile-telephone').textContent = user.telephone || '—';
       document.querySelector('#profile-birth').textContent = user.birth_date;
       document.querySelector('#profile-created').textContent = user.created_at;
-      document.querySelector('#profile-vip').textContent = user.is_vip ? '⭐ Так' : 'Ні';
+      document.querySelector('#profile-vip').textContent = user.is_vip ? 'Yes' : 'No';
     }
   </script>
 
