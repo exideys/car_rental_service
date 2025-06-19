@@ -1,6 +1,4 @@
-/* profile.css */
 
-/* Загальні */
 header, body, footer {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -15,7 +13,7 @@ body {
   min-height: 100vh;
 }
 
-/* Header */
+
 header {
   display: flex;
   justify-content: space-between;
@@ -56,7 +54,6 @@ nav a:hover {
   transform: translateY(-2px);
 }
 
-/* Контейнер основного контенту */
 .profile-container {
   display: flex;
   align-items: flex-start;
@@ -66,7 +63,6 @@ nav a:hover {
   padding: 0 2rem;
 }
 
-/* Ліва колокація: аватарка + logout */
 .profile-left {
   display: flex;
   flex-direction: column;
@@ -94,7 +90,6 @@ nav a:hover {
   color: white;
 }
 
-/* Права колокація: інформація */
 .profile-info {
   flex: 1;
   max-width: 500px;
@@ -116,7 +111,6 @@ nav a:hover {
   font-size: 1rem;
 }
 
-/* Footer */
 .footer {
   margin-top: auto;
   background-color: #f8f8f8;
@@ -143,7 +137,6 @@ nav a:hover {
   color: #000;
 }
 
-/* Адаптив */
 @media (max-width: 768px) {
   .profile-container {
     flex-direction: column;
@@ -163,7 +156,7 @@ nav a:hover {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-end; /* аватарка та logout вирівнюються праворуч */
+  align-items: flex-end; 
   gap: 5px;
 }
 
@@ -224,7 +217,7 @@ nav a:hover {
 
 #orders-table {
   border-collapse: separate;
-  border-spacing: 0 14px; /* відступ між рядками */
+  border-spacing: 0 14px; 
   width: 100%;
 }
 
@@ -240,7 +233,7 @@ nav a:hover {
   text-align: left;
 }
 
-/* Заголовки */
+
 #orders-table th {
   background-color: #ececec;
   font-weight: 600;
@@ -248,12 +241,10 @@ nav a:hover {
   text-align: center;
 }
 
-/* Без анімацій */
 #orders-table td {
   transform: none !important;
 }
 
-/* Центрування тексту у Loading/Error */
 #orders-table td[colspan] {
   text-align: center;
 }

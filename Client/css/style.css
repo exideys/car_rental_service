@@ -18,7 +18,6 @@ html, body {
   flex: 0 0 auto;
 }
 
-/* HEADER */
 header {
   display: flex;
   justify-content: space-between;
@@ -73,7 +72,7 @@ nav a:hover {
   z-index: 1;
 }
 
-/* Псевдоэлемент — заливка */
+
 .hero a button::before {
   content: "";
   position: absolute;
@@ -86,13 +85,11 @@ nav a:hover {
   animation: slide-fill 2s linear infinite;
 }
 
-/* Текст должен быть над анимацией */
 .hero a button span {
   position: relative;
   z-index: 2;
 }
 
-/* Ключевые кадры анимации */
 @keyframes slide-fill {
   from {
     left: -100%;
@@ -129,7 +126,6 @@ nav a:hover {
   cursor: pointer;
 }
 
-/* ADVANTAGES SECTION */
 .advantages, .vehicles {
   padding: 2rem;
   background: #f0f0f0;
@@ -163,7 +159,6 @@ nav a:hover {
   font-size: 1.1rem;
 }
 
-/* CAR IMAGES */
 .hero-car-2 {
   position: absolute;
   width: 520px;
@@ -199,7 +194,6 @@ nav a:hover {
   transform: translateX(0);
 }
 
-/* FOOTER */
 .footer {
   margin-top: auto;
   background-color: #f8f8f8;
@@ -274,7 +268,6 @@ nav a:hover {
   background-color: #333;
   transform: translateY(-2px);
 }
-/* по замовчуванню — прихована */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -286,7 +279,7 @@ nav a:hover {
   z-index: 1000;
 }
 
-/* коли додаємо клас show — показати */
+
 .modal-overlay.show {
   display: flex;
 }
