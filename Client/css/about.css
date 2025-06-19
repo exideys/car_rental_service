@@ -1,6 +1,4 @@
-/* about.css */
 
-/* Header styles (copied from style.css) */
 header {
   display: flex;
   justify-content: space-between;
@@ -50,7 +48,6 @@ align-items: center;
   transform: translateY(-2px);
 }
 
-/* Page content styles */
 body {
   margin: 0;
   padding: 0;
@@ -89,7 +86,6 @@ body {
   margin-top: 40px;
 }
 
-/* Footer styles */
 .footer {
   background-color: #f8f8f8;
   padding: 20px 0;
@@ -120,7 +116,6 @@ body {
   color: #000;
 }
 
-/* Profile dropdown */
 .profile-menu {
   position: relative;
   display: inline-block;
@@ -162,7 +157,6 @@ body {
   color: black;
 }
 
-/* Logout button */
 #logout-btn {
   padding: 8px 12px;
   transition: background-color 0.3s ease;

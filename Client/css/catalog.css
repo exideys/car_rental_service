@@ -181,7 +181,6 @@ nav a:hover {
   margin: 0;
 }
 
-/* Submit button animation */
 .filter-panel button[type="submit"] {
   display: block;
   margin: 20px auto 0;
@@ -271,7 +270,6 @@ nav a:hover {
     background-color: red;
     color: white;
 }
-/* Оверлей: по умолчанию скрыт, при .show — центрируется */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -285,7 +283,6 @@ nav a:hover {
   display: flex;
 }
 
-/* Окно */
 .modal-window {
   background: #fefefe;
   border-radius: 12px;
@@ -298,7 +295,6 @@ nav a:hover {
   position: relative;
 }
 
-/* Контейнер формы: флекс, переносим, межблочный gap */
 #order-form {
   display: flex;
   flex-wrap: wrap;
@@ -306,12 +302,10 @@ nav a:hover {
   margin-top: 16px;
 }
 
-/* Блоки с датами: по 50% ширины каждый */
 #order-form > div {
   flex: 1 1 calc(50% - 8px);
 }
 
-/* Кнопка под датами на всю ширину */
 #order-form > button {
   flex: 1 1 100%;
   padding: 10px;
@@ -328,7 +322,6 @@ nav a:hover {
   background: #005fa3;
 }
 
-/* Остальные стили формы (labels/input) */
 #order-form label {
   display: block;
   margin-bottom: 4px;
