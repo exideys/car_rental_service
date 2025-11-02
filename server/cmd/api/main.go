@@ -72,7 +72,7 @@ func main() {
 				Pwd:    os.Getenv("DB_PASSWORD"),
 				Name:   os.Getenv("DB_NAME"),
 				Driver: "mysql",
-				PARAMS: "tls=true",
+				Params: "tls=true",
 			},
 		},
 		UrlPrefix: "admin",
