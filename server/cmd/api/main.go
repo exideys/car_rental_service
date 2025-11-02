@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	_ "github.com/GoAdminGroup/go-admin/adapter/gin"
 	"github.com/GoAdminGroup/go-admin/engine"
 	"github.com/GoAdminGroup/go-admin/modules/config"
@@ -47,16 +49,6 @@ func main() {
 	if err != nil {
 		return
 	}
-	r.Static("/css", "../Client/css")
-	r.Static("/js", "../Client/js")
-	r.Static("/assets", "../Client/assets")
-	r.StaticFile("/catalog", "../Client/html/catalog.html")
-	r.StaticFile("", "../Client/html/index.html")
-	r.StaticFile("/contacts", "../Client/html/contacts.html")
-	r.StaticFile("/about_us", "../Client/html/about.html")
-	r.StaticFile("/profile", "../Client/html/profile.html")
-	r.StaticFile("/authorisation", "../Client/html/login.html")
-	r.Static("/html", "../Client/html")
 	r.POST("/authorisation", authHandler.SignUp)
 	r.POST("/order", orderHandler.Create)
 	r.GET("/orders", orderHandler.GetAllOrders)
@@ -74,11 +66,11 @@ func main() {
 	cfg := &config.Config{
 		Databases: config.DatabaseList{
 			"default": {
-				Host:   "localhost",
-				Port:   "3306",
-				User:   "root",
-				Pwd:    "",
-				Name:   "rent_cars",
+				Host:   os.Getenv("DB_HOST"),
+				Port:   os.Getenv("DB_PORT"),
+				User:   os.Getenv("DB_USER"),
+				Pwd:    os.Getenv("DB_PASSWORD"),
+				Name:   os.Getenv("DB_NAME"),
 				Driver: "mysql",
 			},
 		},

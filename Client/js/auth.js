@@ -106,3 +106,5 @@ function loadCSS(path) {
 }
 
 loadCSS('profilemenu.css');
+
+module.exports = { showUserMenu };

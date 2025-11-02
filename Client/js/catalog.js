@@ -1,176 +1,232 @@
-document.addEventListener('DOMContentLoaded', () => {
-  
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = '../css/card.css';
-  document.head.appendChild(link);
+document.addEventListener("DOMContentLoaded", () => {
+  const startInput = document.getElementById("start-date");
+  const endInput = document.getElementById("end-date");
+  const totalSum = document.getElementById("total-sum");
+  const submitBtn = document.getElementById("submit-order");
+  const dailyPriceInput = document.getElementById("daily-price");
+  const carIdInput = document.getElementById("car-id");
+  const orderModal = document.getElementById("order-modal");
+  const closeModal = document.querySelector(".close-button");
+  const orderForm = document.getElementById("order-form");
 
-  const list           = document.querySelector('.car-list');
-  const filterForm     = document.getElementById('filter-form');
-  const modal          = document.getElementById('orderModal');
-  const closeBtn       = modal.querySelector('.modal-close');
-  const summaryDiv     = modal.querySelector('#order-summary');
-  const carIdInput     = modal.querySelector('input[name="car_id"]');
-  const orderForm      = document.getElementById('order-form');
-  const startInput     = orderForm.querySelector('input[name="start_date"]');
-  const endInput       = orderForm.querySelector('input[name="end_date"]');
-  const submitBtn      = orderForm.querySelector('button[type="submit"]');
-  const dailyPriceInput= orderForm.querySelector('#dailyPriceInput');
-  const clientIDInput  = orderForm.querySelector('#clientIDInput');
+  if (startInput && endInput && totalSum && submitBtn && dailyPriceInput && carIdInput && orderModal && closeModal && orderForm) {
+    startInput.addEventListener("change", validateDates);
+    endInput.addEventListener("change", validateDates);
+    startInput.addEventListener("change", updateTotal);
+    endInput.addEventListener("change", updateTotal);
 
-  
-  const totalDiv = document.createElement('div');
-  totalDiv.id = 'total-sum-container';
-  totalDiv.style.flex = '1 1 100%';
-  totalDiv.innerHTML = `
-    <label for="total-sum"><b>Total price:</b></label>
-    <div id="total-sum">0₴</div>
-  `;
-  orderForm.insertBefore(totalDiv, submitBtn);
+    closeModal.addEventListener("click", () => {
+      orderModal.classList.remove("show");
+    });
 
-  
-  async function loadCars(params = '') {
-    const cars = await fetch(`/api/cars${params}`).then(r => r.json());
-    renderCars(cars);
-  }
-  loadCars();
-  filterForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const qs = new URLSearchParams(new FormData(filterForm)).toString();
-    loadCars(`?${qs}`);
-  });
-
-  
-  closeBtn.addEventListener('click', () => modal.classList.remove('show'));
-  modal.addEventListener('click', e => {
-    if (e.target === modal) modal.classList.remove('show');
-  });
-
-  
-  function updateTotal() {
-    if (startInput.value && endInput.value && dailyPriceInput.value) {
-      const d1 = new Date(startInput.value);
-      const d2 = new Date(endInput.value);
-      const msPerDay = 1000 * 60 * 60 * 24;
-      let days = Math.ceil((d2 - d1) / msPerDay);
-      if (days < 1) days = 1;
-      const total = days * Number(dailyPriceInput.value);
-      document.getElementById('total-sum').textContent = `${total}₴`;
-    } else {
-      document.getElementById('total-sum').textContent = '0₴';
-    }
-  }
-
-  function validateDates() {
-    if (startInput.value && endInput.value && startInput.value > endInput.value) {
-      endInput.setCustomValidity('End Date cannot be before Start Date');
-      submitBtn.disabled = true;
-    } else {
-      endInput.setCustomValidity('');
-      submitBtn.disabled = false;
-    }
-    updateTotal();
-  }
-
-  startInput.addEventListener('change', () => {
-    endInput.min = startInput.value;
-    validateDates();
-  });
-  endInput.addEventListener('change', () => {
-    startInput.max = endInput.value;
-    validateDates();
-  });
-
-  
-  orderForm.addEventListener('submit', async e => {
-    e.preventDefault();
-    validateDates();
-    if (!orderForm.checkValidity()) return;
-
-    const userResp = await fetch('/api/current_user');
-    if (!userResp.ok) {
-      alert('Please log in before placing an order.');
-      return;
-    }
-    const user = await userResp.json();
-    const fd = new FormData(orderForm);
-    const payload = {
-      email:       user.email,
-      car_id:      Number(fd.get('car_id')),
-      start_date:  fd.get('start_date'),
-      end_date:    fd.get('end_date'),
-      daily_price: Number(fd.get('daily_price')),
-    };
-
-    try {
-      const resp = await fetch('/order', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify(payload),
-      });
-      if (!resp.ok) {
-        const err = await resp.json().catch(() => ({}));
-        alert(err.error || 'Failed to create order. Please try again.');
-        return;
+    window.addEventListener("click", (event) => {
+      if (event.target === orderModal) {
+        orderModal.classList.remove("show");
       }
-      const order = await resp.json();
-      alert(`Order #${order.order_id} successfully created.`);
-      orderForm.reset();
-      document.getElementById('total-sum').textContent = '0₴';
-      modal.classList.remove('show');
-    } catch {
-      alert('Network error. Try again later..');
-    }
-  });
+    });
 
-  
-  function renderCars(cars) {
-    list.innerHTML = '';
-    cars.forEach(car => {
-      const card = document.createElement('div');
-      card.className = 'car-card';
-      card.innerHTML = `
-        <h3>${car.brand} ${car.model}</h3>
-        <div class="car-card-content">
-          <img src="${car.image_path}" alt="">
-          <div class="car-details">
-            <p>Year of issues: ${car.year_of_issue}</p>
-            <p>Plate number: ${car.plate_number}</p>
-            <p>Status: ${car.status}</p>
-            <p>Class: ${car.car_class}</p>
-            <p>Daily price: ${car.daily_price}₴</p>
-          </div>
-        </div>
-        <button class="order-button">Order</button>
-      `;
-      list.appendChild(card);
+    orderForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-      const btn = card.querySelector('.order-button');
-      btn.addEventListener('click', async () => {
-        const carId = car.car_id;
-        carIdInput.value = carId;
+      const formData = new FormData(orderForm);
+      const orderData = Object.fromEntries(formData.entries());
 
-        const [userResp, carResp] = await Promise.all([
-          fetch('/api/current_user'),
-          fetch(`/car_id?car_id=${carId}`)
-        ]);
-        const userData = userResp.ok ? await userResp.json() : {};
-        const carData  = carResp.ok  ? await carResp.json()  : {};
+      try {
+        const response = await fetch("/api/order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(orderData),
+        });
 
-        dailyPriceInput.value = carData.daily_price;
-        clientIDInput.value    = userData.client_id;
-        summaryDiv.innerHTML = `
-          <h4>Accept order</h4>
-          <p><b>Name:</b> ${userData.first_name || '-'}</p>
-          <p><b>Surname:</b> ${userData.last_name  || '-'}</p>
-          <p><b>Email:</b> ${userData.email         || '-'}</p>
-          <p><b>Car:</b> ${carData.brand || '-'} ${carData.model || '-'}</p>
-          <p><b>Plate number:</b> ${carData.plate_number || '-'}</p>
-          <p><b>Daily price:</b> ${carData.daily_price != null ? carData.daily_price + '₴' : '-'}</p>
-        `;
-        document.getElementById('total-sum').textContent = '0₴';
-        modal.classList.add('show');
+        if (response.ok) {
+          alert("Order placed successfully!");
+          orderModal.classList.remove("show");
+          window.location.reload();
+        } else {
+          const errorData = await response.json();
+          alert(`Error: ${errorData.message}`);
+        }
+      } catch (error) {
+        console.error("Error placing order:", error);
+        alert("An error occurred while placing the order.");
+      }
+    });
+  }
+
+  const carCards = document.querySelectorAll(".car-card");
+  if (carCards) {
+    carCards.forEach((card) => {
+      card.addEventListener("click", async () => {
+        const carId = card.dataset.carId;
+        try {
+          const response = await fetch(`/api/car/${carId}`);
+          if (!response.ok) {
+            throw new Error("Failed to fetch car details");
+          }
+          const carData = await response.json();
+          openOrderModal(carData);
+        } catch (error) {
+          console.error("Error fetching car details:", error);
+          alert("Failed to load car details.");
+        }
+      });
+    });
+  }
+
+  function openOrderModal(carData) {
+    const modal = document.getElementById("order-modal");
+    if (!modal) return;
+
+    document.getElementById("modal-car-image").src = carData.image_url || "/assets/default-car.png";
+    document.getElementById("modal-car-name").textContent = `${carData.brand} ${carData.model}`;
+    document.getElementById("modal-car-year").textContent = carData.year;
+    document.getElementById("modal-car-price").textContent = `${carData.daily_price}₴/day`;
+    document.getElementById("daily-price").value = carData.daily_price;
+    document.getElementById("car-id").value = carData.id;
+
+    // Reset dates and total
+    startInput.value = "";
+    endInput.value = "";
+    totalSum.textContent = "0₴";
+
+    modal.classList.add("show");
+  }
+
+  const filterForm = document.getElementById("filter-form");
+  if (filterForm) {
+    filterForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(filterForm);
+      const queryParams = new URLSearchParams();
+      for (const [key, value] of formData.entries()) {
+        if (value) {
+          queryParams.append(key, value);
+        }
+      }
+      window.location.href = `/html/catalog.html?${queryParams.toString()}`;
+    });
+  }
+
+  const clearFilterBtn = document.getElementById("clear-filter-btn");
+  if (clearFilterBtn) {
+    clearFilterBtn.addEventListener("click", () => {
+      window.location.href = "/html/catalog.html";
+    });
+  }
+
+  const searchInput = document.getElementById("search-input");
+  if (searchInput) {
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const query = searchInput.value;
+        window.location.href = `/html/catalog.html?search=${encodeURIComponent(query)}`;
+      }
+    });
+  }
+
+  const sortSelect = document.getElementById("sort-select");
+  if (sortSelect) {
+    sortSelect.addEventListener("change", (e) => {
+      const sortValue = e.target.value;
+      const url = new URL(window.location.href);
+      url.searchParams.set("sort", sortValue);
+      window.location.href = url.toString();
+    });
+  }
+
+  const paginationLinks = document.querySelectorAll(".pagination-link");
+  if (paginationLinks) {
+    paginationLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const page = link.dataset.page;
+        const url = new URL(window.location.href);
+        url.searchParams.set("page", page);
+        window.location.href = url.toString();
+      });
+    });
+  }
+
+  const orderButtons = document.querySelectorAll(".order-button");
+  if (orderButtons) {
+    orderButtons.forEach((button) => {
+      button.addEventListener("click", async (e) => {
+        e.stopPropagation();
+        const carId = button.dataset.carId;
+        const modal = document.getElementById("order-modal");
+        const carImage = modal.querySelector("#modal-car-image");
+        const carName = modal.querySelector("#modal-car-name");
+        const carYear = modal.querySelector("#modal-car-year");
+        const carPrice = modal.querySelector("#modal-car-price");
+        const dailyPriceInput = modal.querySelector("#daily-price");
+        const carIdInput = modal.querySelector("#car-id");
+
+        try {
+          const response = await fetch(`/api/car/${carId}`);
+          if (!response.ok) {
+            throw new Error("Failed to fetch car details");
+          }
+          const carData = await response.json();
+
+          carImage.src = carData.image_url || "/assets/default-car.png";
+          carName.textContent = `${carData.brand} ${carData.model}`;
+          carYear.textContent = carData.year;
+          carPrice.textContent = `${carData.daily_price}₴/day`;
+          dailyPriceInput.value = carData.daily_price;
+          carIdInput.value = carData.id;
+
+          // Reset dates and total
+          startInput.value = "";
+          endInput.value = "";
+          document.getElementById("total-sum").textContent = "0₴";
+          modal.classList.add("show");
+        } catch (error) {
+          console.error("Error fetching car details:", error);
+          alert("Failed to load car details.");
+        }
       });
     });
   }
 });
+
+function updateTotal() {
+  const startInput = document.getElementById("start-date");
+  const endInput = document.getElementById("end-date");
+  const dailyPriceInput = document.getElementById("daily-price");
+  const totalSum = document.getElementById("total-sum");
+
+  if (startInput && endInput && dailyPriceInput && totalSum && startInput.value && endInput.value && dailyPriceInput.value) {
+    const d1 = new Date(startInput.value);
+    const d2 = new Date(endInput.value);
+    const msPerDay = 1000 * 60 * 60 * 24;
+    let days = Math.ceil((d2 - d1) / msPerDay);
+    if (days < 1) days = 1;
+    const total = days * Number(dailyPriceInput.value);
+    totalSum.textContent = `${total}₴`;
+  } else if (totalSum) {
+    totalSum.textContent = "0₴";
+  }
+}
+
+function validateDates() {
+  const startInput = document.getElementById("start-date");
+  const endInput = document.getElementById("end-date");
+  const submitBtn = document.getElementById("submit-order");
+
+  if (startInput && endInput && submitBtn) {
+    const startDate = new Date(startInput.value);
+    const endDate = new Date(endInput.value);
+
+    if (startDate && endDate && startDate >= endDate) {
+      alert("End date must be after start date.");
+      submitBtn.disabled = true;
+    } else {
+      submitBtn.disabled = false;
+    }
+  }
+}
+
+module.exports = { updateTotal, validateDates };
