@@ -64,25 +64,25 @@ func main() {
 		api.GET("/current_user", authHandler.GetCurrentUser)
 	}
 	cfg := &config.Config{
-		Databases: config.DatabaseList{
-			"default": {
-				Host:   os.Getenv("DB_HOST"),
-				Port:   os.Getenv("DB_PORT"),
-				User:   os.Getenv("DB_USER"),
-				Pwd:    os.Getenv("DB_PASSWORD"),
-				Name:   os.Getenv("DB_NAME"),
-				Driver: "mysql",
-				Params: "tls=true",
+			Databases: config.DatabaseList{
+				"default": {
+					Host:   os.Getenv("DB_HOST"),
+					Port:   os.Getenv("DB_PORT"),
+					User:   os.Getenv("DB_USER"),
+					Pwd:    os.Getenv("DB_PASSWORD"),
+					Name:   os.Getenv("DB_NAME"),
+					Driver: "mysql",
+					Params: map[string]string{"tls": "true"},
+				},
 			},
-		},
-		UrlPrefix: "admin",
-		Theme:     "adminlte",
-		IndexUrl:  "/info/cars",
-		Store: config.Store{
-			Path:   "./uploads",
-			Prefix: "uploads",
-		},
-	}
+			UrlPrefix: "admin",
+			Theme:     "adminlte",
+			IndexUrl:  "/info/cars",
+			Store: config.Store{
+				Path:   "./uploads",
+				Prefix: "uploads",
+			},
+		}
 	adminPlugin := admin.NewAdmin()
 
 	for name, gen := range tables.Generators {
